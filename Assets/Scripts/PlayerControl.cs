@@ -170,14 +170,25 @@ public class PlayerControl : MonoBehaviour
 
     // gives the guard a recovery time
     IEnumerator ShieldCount() {
+        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        Color originalColor = meshRenderer.material.color;
+        meshRenderer.material.color = Color.blue;
         yield return new WaitForSeconds(0.5f);
+        meshRenderer.material.color = originalColor;
+
         acting = false;
     }
 
     //give the attack some start up and then checks to see if the opponent is blocking correctly
     IEnumerator SwordCount()
     {
-        yield return new WaitForSeconds(0.2f);
+        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        Color originalColor = meshRenderer.material.color;
+        meshRenderer.material.color = Color.red;
+
+        yield return new WaitForSeconds(0.3f); 
+        
+
         if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().acting)
         {
             Switch();
@@ -188,6 +199,14 @@ public class PlayerControl : MonoBehaviour
         {
             Debug.Log("hit");
         }
+
+       
+        yield return new WaitForSeconds(0.1f); 
+
+        meshRenderer.material.color = originalColor;
+
         acting = false;
     }
+
+
 }
