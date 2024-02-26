@@ -19,6 +19,7 @@ public class PlayerControl : MonoBehaviour
     public KeyCode Up;
     public KeyCode Down;
     public KeyCode Action;
+    public KeyCode Feint;
 
     //var holding which sword / shield the player has raised
     public GameObject active;
@@ -45,18 +46,18 @@ public class PlayerControl : MonoBehaviour
             active.SetActive(true);
             height = 1;
         }
-        else 
+        else
         {
             state = Phase.DEFENDING;
             active = shieldM;
             active.SetActive(true);
             height = 1;
         }
-        
-        }
 
-        // Update is called once per frame
-        void Update()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         // if not acting the player can use the arrow keys to raise or lower height
         if (!acting)
@@ -84,21 +85,37 @@ public class PlayerControl : MonoBehaviour
                     StartCoroutine(ShieldCount());
                 }
             }
+
+            // the player will feint if currently attacking
+            // Don't know how to create a custom Keycode for feinting
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                acting = true;
+                if (state == Phase.ATTACKING)
+                {
+                    StartCoroutine(FeintCount());
+                }
+            }
         }
     }
     //deactivates the current active sword / shield and then activates the one above it
-    void ShiftUp() 
+    void ShiftUp()
     {
-        if (height == 1) {
+        if (height == 1)
+        {
             height = 2;
             active.SetActive(false);
-            if (state == Phase.ATTACKING) { 
+            if (state == Phase.ATTACKING)
+            {
                 active = swordH;
-            } else if (state == Phase.DEFENDING) {
+            }
+            else if (state == Phase.DEFENDING)
+            {
                 active = shieldH;
             }
             active.SetActive(true);
-        } else if (height == 0)
+        }
+        else if (height == 0)
         {
             height = 1;
             active.SetActive(false);
@@ -131,7 +148,8 @@ public class PlayerControl : MonoBehaviour
                 active = shieldM;
             }
             active.SetActive(true);
-        } else if (height == 1)
+        }
+        else if (height == 1)
         {
             height = 0;
             active.SetActive(false);
@@ -148,10 +166,10 @@ public class PlayerControl : MonoBehaviour
 
     }
 
-    void Switch() 
+    void Switch()
     {
         active.SetActive(false);
-        if (state == Phase.DEFENDING) 
+        if (state == Phase.DEFENDING)
         {
             state = Phase.ATTACKING;
             active = swordM;
@@ -169,25 +187,60 @@ public class PlayerControl : MonoBehaviour
 
 
     // gives the guard a recovery time
-    IEnumerator ShieldCount() {
+    IEnumerator ShieldCount()
+    {
+        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        Color originalColor = meshRenderer.material.color;
+        meshRenderer.material.color = Color.blue;
         yield return new WaitForSeconds(0.5f);
+        meshRenderer.material.color = originalColor;
+
         acting = false;
     }
 
     //give the attack some start up and then checks to see if the opponent is blocking correctly
     IEnumerator SwordCount()
     {
-        yield return new WaitForSeconds(0.2f);
+        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        Color originalColor = meshRenderer.material.color;
+        meshRenderer.material.color = Color.red;
+
+        yield return new WaitForSeconds(0.3f);
+
+
         if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().acting)
         {
             Switch();
             opponent.GetComponent<PlayerControl>().Switch();
             Debug.Log("block");
         }
-        else 
+        else
         {
             Debug.Log("hit");
         }
+
+
+        yield return new WaitForSeconds(0.1f);
+
+        meshRenderer.material.color = originalColor;
+
         acting = false;
     }
+
+    //use a feint
+    IEnumerator FeintCount()
+    {
+        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        Color originalColor = meshRenderer.material.color;
+        meshRenderer.material.color = Color.yellow;
+        Debug.Log("feint");
+
+        yield return new WaitForSeconds(0.2f);
+
+        meshRenderer.material.color = originalColor;
+
+        acting = false;
+    }
+
+
 }
