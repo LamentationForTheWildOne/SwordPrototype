@@ -88,7 +88,7 @@ public class PlayerControl : MonoBehaviour
 
             // the player will feint if currently attacking
             // Don't know how to create a custom Keycode for feinting
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(Feint))
             {
                 acting = true;
                 if (state == Phase.ATTACKING)
