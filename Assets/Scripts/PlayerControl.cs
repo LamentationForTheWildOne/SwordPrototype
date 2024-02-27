@@ -35,6 +35,9 @@ public class PlayerControl : MonoBehaviour
 
     public bool first;
 
+    //var referencing the Text Display
+    public TextDisplay TheTextDisplay;
+
     // Start is called before the first frame update
     void Start()
     {
