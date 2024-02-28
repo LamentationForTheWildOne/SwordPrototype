@@ -7,11 +7,10 @@ public class PlayerControl : MonoBehaviour
 {
     public GameObject opponent;
 
-    //Game objects for various sword / shield heights
+    // Game objects for various sword/shield heights
     public GameObject swordH;
     public GameObject swordM;
     public GameObject swordL;
-
     public GameObject shieldH;
     public GameObject shieldM;
     public GameObject shieldL;
@@ -21,61 +20,49 @@ public class PlayerControl : MonoBehaviour
     public KeyCode Action;
     public KeyCode Feint;
 
-    //var holding which sword / shield the player has raised
+    // Variable holding which sword/shield the player has raised
     public GameObject active;
 
-    //var regulating phases
+    // Variable regulating phases
     public Phase state;
 
-    //var setting height
+    // Variable setting height
     public int height;
 
-    //bool to prevent player from changing height while attacking / defending
+    // Bool to prevent player from changing height while attacking/defending
     public bool acting;
 
     public bool first;
 
-    //var referencing the Text Display
+    // Variable referencing the Text Display
     public TextDisplay TheTextDisplay;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Sets middle sword as active by default for player one and middle shield for player 2
+        // Sets middle sword as active by default for player one and middle shield for player 2
         if (first)
         {
             state = Phase.ATTACKING;
             active = swordM;
-            active.SetActive(true);
-            height = 1;
         }
         else
         {
             state = Phase.DEFENDING;
             active = shieldM;
-            active.SetActive(true);
-            height = 1;
         }
-
+        active.SetActive(true);
+        height = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if not acting the player can use the arrow keys to raise or lower height
         if (!acting)
         {
+            HandleMovementInput();
 
-            if (Input.GetKeyDown(Up))
-            {
-                ShiftUp();
-            }
-            if (Input.GetKeyDown(Down))
-            {
-                ShiftDown();
-            }
-
-            // the player will either guard or attack depending on the phase
+            // Action and Feint logic
             if (Input.GetKeyDown(Action))
             {
                 acting = true;
@@ -89,15 +76,41 @@ public class PlayerControl : MonoBehaviour
                 }
             }
 
-            // the player will feint if currently attacking
-            // Don't know how to create a custom Keycode for feinting
-            if (Input.GetKeyDown(Feint))
+            if (Input.GetKeyDown(Feint) && state == Phase.ATTACKING)
             {
                 acting = true;
-                if (state == Phase.ATTACKING)
-                {
-                    StartCoroutine(FeintCount());
-                }
+                StartCoroutine(FeintCount());
+            }
+        }
+    }
+
+    void HandleMovementInput()
+    {
+        // Adjust behavior for continuous input during DEFENDING phase
+        if (state == Phase.DEFENDING)
+        {
+            if (Input.GetKey(Up))
+            {
+                SetShieldPosition(2); // High position
+            }
+            else if (Input.GetKey(Down))
+            {
+                SetShieldPosition(0); // Low position
+            }
+            else
+            {
+                ResetShieldPosition(); // Neutral/middle position
+            }
+        }
+        else // ATTACKING phase retains original one-time press behavior
+        {
+            if (Input.GetKeyDown(Up))
+            {
+                ShiftUp();
+            }
+            if (Input.GetKeyDown(Down))
+            {
+                ShiftDown();
             }
         }
     }
@@ -168,6 +181,28 @@ public class PlayerControl : MonoBehaviour
         }
 
     }
+    void ResetShieldPosition()
+    {
+        if (height != 1)
+        {
+            height = 1;
+            active.SetActive(false);
+            active = shieldM;
+            active.SetActive(true);
+        }
+    }
+
+    void SetShieldPosition(int newHeight)
+    {
+        if (height != newHeight)
+        {
+            active.SetActive(false);
+            height = newHeight;
+            active = (newHeight == 2) ? shieldH : (newHeight == 0) ? shieldL : shieldM;
+            active.SetActive(true);
+        }
+    }
+
 
     void Switch()
     {
