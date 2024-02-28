@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.UI;
 public enum Phase { ATTACKING, DEFENDING }
 
 public class PlayerControl : MonoBehaviour
@@ -17,8 +19,13 @@ public class PlayerControl : MonoBehaviour
 
     public KeyCode Up;
     public KeyCode Down;
+    public Button ActionB;
+    public Button FeintB;
     public KeyCode Action;
     public KeyCode Feint;
+
+    public string playerAxes;
+    public int playerCount;
 
     // Variable holding which sword/shield the player has raised
     public GameObject active;
@@ -63,7 +70,7 @@ public class PlayerControl : MonoBehaviour
             HandleMovementInput();
 
             // Action and Feint logic
-            if (Input.GetKeyDown(Action))
+            if (Input.GetButtonDown("Action" + playerCount) | Input.GetKeyDown(Action))
             {
                 acting = true;
                 if (state == Phase.ATTACKING)
@@ -76,7 +83,7 @@ public class PlayerControl : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(Feint) && state == Phase.ATTACKING)
+            if (Input.GetButtonDown("Feint" + playerCount) | Input.GetKeyDown(Feint) && state == Phase.ATTACKING)
             {
                 acting = true;
                 StartCoroutine(FeintCount());
@@ -89,11 +96,11 @@ public class PlayerControl : MonoBehaviour
         // Adjust behavior for continuous input during DEFENDING phase
         if (state == Phase.DEFENDING)
         {
-            if (Input.GetKey(Up))
+            if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
             {
                 SetShieldPosition(2); // High position
             }
-            else if (Input.GetKey(Down))
+            else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
             {
                 SetShieldPosition(0); // Low position
             }
@@ -104,13 +111,17 @@ public class PlayerControl : MonoBehaviour
         }
         else // ATTACKING phase retains original one-time press behavior
         {
-            if (Input.GetKeyDown(Up))
+            if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
             {
-                ShiftUp();
+                SetSwordPosition(2); // High position
             }
-            if (Input.GetKeyDown(Down))
+            else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
             {
-                ShiftDown();
+                SetSwordPosition(0); // Low position
+            }
+            else
+            {
+                ResetSwordPosition(); // Neutral/middle position
             }
         }
     }
@@ -203,6 +214,27 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    void ResetSwordPosition()
+    {
+        if (height != 1)
+        {
+            height = 1;
+            active.SetActive(false);
+            active = swordM;
+            active.SetActive(true);
+        }
+    }
+
+    void SetSwordPosition(int newHeight)
+    {
+        if (height != newHeight)
+        {
+            active.SetActive(false);
+            height = newHeight;
+            active = (newHeight == 2) ? swordH : (newHeight == 0) ? swordL : swordM;
+            active.SetActive(true);
+        }
+    }
 
     public void Switch()
     {
@@ -213,6 +245,7 @@ public class PlayerControl : MonoBehaviour
             active = swordM;
             active.SetActive(true);
             height = 1;
+            acting = false;
         }
         else if (state == Phase.ATTACKING)
         {
@@ -220,6 +253,7 @@ public class PlayerControl : MonoBehaviour
             active = shieldM;
             active.SetActive(true);
             height = 1;
+            acting = false;
         }
     }
 
@@ -238,9 +272,10 @@ public class PlayerControl : MonoBehaviour
     //give the attack some start up and then checks to see if the opponent is blocking correctly
     IEnumerator SwordCount()
     {
-        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
-        Color originalColor = meshRenderer.material.color;
-        meshRenderer.material.color = Color.red;
+       // MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        //Color originalColor = meshRenderer.material.color;
+       // meshRenderer.material.color = Color.red;
+        active.GetComponent<SwordMovement>().Thrust();
 
         yield return new WaitForSeconds(0.3f); 
         
@@ -263,7 +298,7 @@ public class PlayerControl : MonoBehaviour
        
         yield return new WaitForSeconds(0.1f); 
 
-        meshRenderer.material.color = originalColor;
+        //meshRenderer.material.color = originalColor;
 
         acting = false;
     }
@@ -271,14 +306,15 @@ public class PlayerControl : MonoBehaviour
     //use a feint
     IEnumerator FeintCount()
     {
-        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
-        Color originalColor = meshRenderer.material.color;
-        meshRenderer.material.color = Color.yellow;
+        //MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        //Color originalColor = meshRenderer.material.color;
+        //meshRenderer.material.color = Color.yellow;
         Debug.Log("feint");
+        active.GetComponent<SwordMovement>().Feint();
 
         yield return new WaitForSeconds(0.2f);
 
-        meshRenderer.material.color = originalColor;
+        //meshRenderer.material.color = originalColor;
 
         acting = false;
     }

@@ -693,7 +693,7 @@ Transform:
   m_GameObject: {fileID: 291678703}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -0.391, z: 0.020564094}
+  m_LocalPosition: {x: -3, y: -0.391, z: 0.020564094}
   m_LocalScale: {x: 1.2169, y: 1.9979, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -726,8 +726,12 @@ MonoBehaviour:
   shieldL: {fileID: 1705506237}
   Up: 119
   Down: 115
-  Action: 304
+  ActionB: {fileID: 0}
+  FeintB: {fileID: 0}
+  Action: 100
   Feint: 97
+  playerAxes: Vertical1
+  playerCount: 1
   active: {fileID: 0}
   state: 0
   height: 0
@@ -1135,8 +1139,12 @@ MonoBehaviour:
   shieldL: {fileID: 185159049}
   Up: 273
   Down: 274
-  Action: 303
+  ActionB: {fileID: 0}
+  FeintB: {fileID: 0}
+  Action: 276
   Feint: 275
+  playerAxes: Vertical2
+  playerCount: 2
   active: {fileID: 0}
   state: 1
   height: 0
@@ -1223,7 +1231,7 @@ Transform:
   m_GameObject: {fileID: 865475061}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 2, y: -0.391, z: 0.020564094}
+  m_LocalPosition: {x: 3, y: -0.391, z: 0.020564094}
   m_LocalScale: {x: 1.2169, y: 1.9979, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1247,6 +1255,7 @@ GameObject:
   - component: {fileID: 875843324}
   - component: {fileID: 875843323}
   - component: {fileID: 875843322}
+  - component: {fileID: 875843326}
   m_Layer: 0
   m_Name: sword_low
   m_TagString: Untagged
@@ -1340,6 +1349,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 291678707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &875843326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875843321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5de5706c417bd046bf75fea10a9afcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spd: 0
+  flip: 1
 --- !u!1 &935798610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,6 +1375,7 @@ GameObject:
   - component: {fileID: 935798613}
   - component: {fileID: 935798612}
   - component: {fileID: 935798611}
+  - component: {fileID: 935798615}
   m_Layer: 0
   m_Name: sword_mid
   m_TagString: Untagged
@@ -1445,6 +1469,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 865475066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &935798615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935798610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5de5706c417bd046bf75fea10a9afcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spd: 0
+  flip: -1
 --- !u!1 &1196171949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,6 +1600,7 @@ GameObject:
   - component: {fileID: 1225436907}
   - component: {fileID: 1225436906}
   - component: {fileID: 1225436905}
+  - component: {fileID: 1225436909}
   m_Layer: 0
   m_Name: sword_high
   m_TagString: Untagged
@@ -1655,6 +1694,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 865475066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225436909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225436904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5de5706c417bd046bf75fea10a9afcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spd: 0
+  flip: -1
 --- !u!1 &1576827787
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,6 +2332,7 @@ GameObject:
   - component: {fileID: 1852067810}
   - component: {fileID: 1852067809}
   - component: {fileID: 1852067808}
+  - component: {fileID: 1852067812}
   m_Layer: 0
   m_Name: sword_mid
   m_TagString: Untagged
@@ -2372,6 +2426,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 291678707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1852067812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852067807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5de5706c417bd046bf75fea10a9afcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spd: 0
+  flip: 1
 --- !u!1 &1975103473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,6 +2557,7 @@ GameObject:
   - component: {fileID: 1994610949}
   - component: {fileID: 1994610948}
   - component: {fileID: 1994610947}
+  - component: {fileID: 1994610951}
   m_Layer: 0
   m_Name: sword_low
   m_TagString: Untagged
@@ -2582,6 +2651,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 865475066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1994610951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994610946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5de5706c417bd046bf75fea10a9afcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spd: 0
+  flip: -1
 --- !u!1 &2085641326
 GameObject:
   m_ObjectHideFlags: 0
@@ -2699,6 +2782,7 @@ GameObject:
   - component: {fileID: 2092057881}
   - component: {fileID: 2092057880}
   - component: {fileID: 2092057879}
+  - component: {fileID: 2092057883}
   m_Layer: 0
   m_Name: sword_high
   m_TagString: Untagged
@@ -2792,6 +2876,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 291678707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2092057883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092057878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5de5706c417bd046bf75fea10a9afcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spd: 0
+  flip: 1
 --- !u!1 &2146030905
 GameObject:
   m_ObjectHideFlags: 0
