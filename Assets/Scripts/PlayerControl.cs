@@ -204,7 +204,7 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    void Switch()
+    public void Switch()
     {
         active.SetActive(false);
         if (state == Phase.DEFENDING)
@@ -254,6 +254,8 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
+            Switch();
+            opponent.GetComponent<PlayerControl>().Switch();
             Debug.Log("hit");
             TheTextDisplay.StrikeLanded(first);
         }

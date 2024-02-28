@@ -5,6 +5,10 @@ using TMPro;
 
 public class TextDisplay : MonoBehaviour
 {
+    //Players
+    public PlayerControl Player1;
+    public PlayerControl Player2;
+
     //Text boxes
     public TMP_Text RoundAndTimerDisplay;
     public TMP_Text Scoreboard;
@@ -63,7 +67,17 @@ public class TextDisplay : MonoBehaviour
     //Updates the display
     void UpdateDisplay()
     {
-        if (RoundTimer <= 0 && RoundCountdown <= 0) RoundAndTimerDisplay.text = "Round " + RoundNum + ":\n" + "(Debug: Time is Up)";
+        if (RoundTimer <= 0 && RoundCountdown <= 0)
+        {
+            Player1.Switch();
+            Player2.Switch();
+            BlockTimer = MaxBlockTimer;
+            BlockTextVisible = true;
+            RoundTimer = MaxTime;
+            RoundCountdown = 1;
+            RoundNum += 1;
+            UpdateDisplay();
+        }
         else RoundAndTimerDisplay.text = "Round " + RoundNum + ":\n" + RoundTimer;
         Scoreboard.text = P1Score + " - " + P2Score;
     }
@@ -121,6 +135,7 @@ public class TextDisplay : MonoBehaviour
         BlockTextVisible = true; 
         RoundTimer = MaxTime;
         RoundCountdown = 1;
+        RoundNum += 1;
         UpdateDisplay();
     }
 
@@ -135,6 +150,7 @@ public class TextDisplay : MonoBehaviour
         BlockTimer = MaxBlockTimer;
         RoundTimer = MaxTime;
         RoundCountdown = 1;
+        RoundNum += 1;
         UpdateDisplay();
     }
 }

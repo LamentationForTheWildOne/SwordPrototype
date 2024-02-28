@@ -243,6 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b261b91b87f7b4ed0a954c13894bcef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player1: {fileID: 291678708}
+  Player2: {fileID: 865475062}
   RoundAndTimerDisplay: {fileID: 549323283}
   Scoreboard: {fileID: 70127641}
   P1Block: {fileID: 1701516915}
@@ -605,7 +607,7 @@ GameObject:
   - component: {fileID: 291678704}
   - component: {fileID: 291678708}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
