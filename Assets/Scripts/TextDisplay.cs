@@ -11,6 +11,10 @@ public class TextDisplay : MonoBehaviour
     public TMP_Text P1Block;
     public TMP_Text P2Block;
 
+    public TMP_Text P1Hit;
+    public TMP_Text P2Hit;
+
+
     //Relevant stats to display
     public int MaxTime;
     public int RoundNum;
@@ -43,16 +47,18 @@ public class TextDisplay : MonoBehaviour
         if (BlockTextVisible)
         {
             BlockTimer -= Time.deltaTime;
-            if(BlockTimer <= 0)
+            if (BlockTimer <= 0)
             {
                 BlockTextVisible = false;
                 P1Block.text = "";
                 P2Block.text = "";
+                P1Hit.text = ""; 
+                P2Hit.text = ""; 
                 BlockTimer = 0;
-
             }
         }
     }
+
 
     //Updates the display
     void UpdateDisplay()
@@ -86,6 +92,8 @@ public class TextDisplay : MonoBehaviour
         BlockTimer = 0;
         P1Block.text = "";
         P2Block.text = "";
+        P1Hit.text = "";
+        P2Hit.text = "";
 
 
         //Resets displays
@@ -93,14 +101,29 @@ public class TextDisplay : MonoBehaviour
     }
 
     //Updates the score and round # and resets the RoundTimer when a strike is landed
+
     public void StrikeLanded(bool Player1Attacker)
     {
-        if (Player1Attacker) P1Score += 1;
-        else P2Score += 1;
+        if (Player1Attacker)
+        {
+            P1Score += 1;
+            P1Hit.text = "Hit!"; 
+            P2Hit.text = ""; 
+        }
+        else
+        {
+            P2Score += 1;
+            P2Hit.text = "Hit!"; 
+            P1Hit.text = ""; 
+        }
+
+        BlockTimer = MaxBlockTimer;
+        BlockTextVisible = true; 
         RoundTimer = MaxTime;
         RoundCountdown = 1;
         UpdateDisplay();
     }
+
 
     //Updates the round # and resets the RoundTimer when a strike is blocked
     public void StrikeBlocked(bool Player1Attacker)
