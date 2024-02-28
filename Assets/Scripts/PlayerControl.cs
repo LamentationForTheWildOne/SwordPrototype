@@ -215,10 +215,12 @@ public class PlayerControl : MonoBehaviour
             Switch();
             opponent.GetComponent<PlayerControl>().Switch();
             Debug.Log("block");
+            TheTextDisplay.StrikeBlocked(first);
         }
         else
         {
             Debug.Log("hit");
+            TheTextDisplay.StrikeLanded(first);
         }
 
        
