@@ -8,6 +8,7 @@ public enum Phase { ATTACKING, DEFENDING }
 public class PlayerControl : MonoBehaviour
 {
     public GameObject opponent;
+    public GameManager gameManager;
 
     // Game objects for various sword/shield heights
     public GameObject swordH;
@@ -126,72 +127,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
     //deactivates the current active sword / shield and then activates the one above it
-    void ShiftUp()
-    {
-        if (height == 1)
-        {
-            height = 2;
-            active.SetActive(false);
-            if (state == Phase.ATTACKING)
-            {
-                active = swordH;
-            }
-            else if (state == Phase.DEFENDING)
-            {
-                active = shieldH;
-            }
-            active.SetActive(true);
-        }
-        else if (height == 0)
-        {
-            height = 1;
-            active.SetActive(false);
-            if (state == Phase.ATTACKING)
-            {
-                active = swordM;
-            }
-            else if (state == Phase.DEFENDING)
-            {
-                active = shieldM;
-            }
-            active.SetActive(true);
-        }
-
-    }
-
-    // same as shift up except it does it in the opposite direction
-    void ShiftDown()
-    {
-        if (height == 2)
-        {
-            height = 1;
-            active.SetActive(false);
-            if (state == Phase.ATTACKING)
-            {
-                active = swordM;
-            }
-            else if (state == Phase.DEFENDING)
-            {
-                active = shieldM;
-            }
-            active.SetActive(true);
-        }
-        else if (height == 1)
-        {
-            height = 0;
-            active.SetActive(false);
-            if (state == Phase.ATTACKING)
-            {
-                active = swordL;
-            }
-            else if (state == Phase.DEFENDING)
-            {
-                active = shieldL;
-            }
-            active.SetActive(true);
-        }
-
-    }
     void ResetShieldPosition()
     {
         if (height != 1)
@@ -282,25 +217,22 @@ public class PlayerControl : MonoBehaviour
 
         if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().acting)
         {
-            Switch();
-            opponent.GetComponent<PlayerControl>().Switch();
             Debug.Log("block");
             TheTextDisplay.StrikeBlocked(first);
+            StartCoroutine(Hitstun());
         }
         else
         {
-            Switch();
-            opponent.GetComponent<PlayerControl>().Switch();
             Debug.Log("hit");
             TheTextDisplay.StrikeLanded(first);
+            StartCoroutine(Hitstun());
+            StartCoroutine(Repo());
+
         }
 
-       
         yield return new WaitForSeconds(0.1f); 
 
         //meshRenderer.material.color = originalColor;
-
-        acting = false;
     }
 
     //use a feint
@@ -317,6 +249,21 @@ public class PlayerControl : MonoBehaviour
         //meshRenderer.material.color = originalColor;
 
         acting = false;
+    }
+
+    IEnumerator Hitstun() {
+        opponent.GetComponent<PlayerControl>().acting = true;
+        yield return new WaitForSeconds(0.2f);
+        opponent.GetComponent<PlayerControl>().acting = true;
+        yield return new WaitForSeconds(0.4f);
+        active.GetComponent<SwordMovement>().Return();
+        Switch();
+        opponent.GetComponent<PlayerControl>().Switch();
+    }
+
+    IEnumerator Repo() {
+        yield return new WaitForSeconds(0.6f);
+        gameManager.Reposition(playerCount);
     }
 
 

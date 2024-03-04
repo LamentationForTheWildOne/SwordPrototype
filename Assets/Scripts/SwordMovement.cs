@@ -33,12 +33,16 @@ public class SwordMovement : MonoBehaviour
         StartCoroutine(FeintTimer());
     }
 
+    public void Return() 
+    {
+        transform.position = startPos;
+    }
+
     IEnumerator AttackTimer() 
     {
         spd = 10;
         yield return new WaitForSeconds(0.3f);
         spd = 0;
-        transform.position = startPos;
     }
 
     IEnumerator FeintTimer()
