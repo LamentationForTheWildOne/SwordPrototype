@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
-public enum Phase { ATTACKING, DEFENDING }
+public enum Phase { ATTACKING, PREROUND, DEFENDING }
 
 public class PlayerControl : MonoBehaviour
 {
     public GameObject opponent;
     public GameManager gameManager;
+    public AbilityList abilityList;
+
+    public int offcool;
+    public int defcool;
 
     // Game objects for various sword/shield heights
     public GameObject swordH;
@@ -28,6 +32,9 @@ public class PlayerControl : MonoBehaviour
     public string playerAxes;
     public int playerCount;
 
+    //Bools to hold buffs
+    public bool fury = false;
+
     // Variable holding which sword/shield the player has raised
     public GameObject active;
 
@@ -44,6 +51,8 @@ public class PlayerControl : MonoBehaviour
 
     // Variable referencing the Text Display
     public TextDisplay TheTextDisplay;
+
+    private Phase moveto;
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +75,7 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!acting)
+        if (!acting && state != Phase.PREROUND)
         {
             HandleMovementInput();
 
@@ -90,6 +99,40 @@ public class PlayerControl : MonoBehaviour
                 StartCoroutine(FeintCount());
             }
         }
+        if (state == Phase.PREROUND) {
+            if (moveto == Phase.ATTACKING)
+            {
+                if ((Input.GetButtonDown("Action" + playerCount) | Input.GetKeyDown(Action)) && offcool == 0) 
+                {
+                    offcool = abilityList.oCool;
+                    switch (abilityList.oSkill) {
+
+                        case 0:
+                            fury = true;
+                            break;
+                    
+                    }
+                
+                }
+            }
+            else if (moveto == Phase.DEFENDING) 
+            {
+                if ((Input.GetButtonDown("Action" + playerCount) | Input.GetKeyDown(Action)) && defcool == 0)
+                {
+                    defcool = abilityList.dCool;
+                    switch (abilityList.dSkill)
+                    {
+
+                        case 0:
+                            gameManager.Impatient();
+                            break;
+
+                    }
+                }
+
+            }
+        
+        }
     }
 
     void HandleMovementInput()
@@ -110,7 +153,7 @@ public class PlayerControl : MonoBehaviour
                 ResetShieldPosition(); // Neutral/middle position
             }
         }
-        else // ATTACKING phase retains original one-time press behavior
+        else if (state == Phase.ATTACKING) // ATTACKING phase retains original one-time press behavior
         {
             if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
             {
@@ -176,7 +219,12 @@ public class PlayerControl : MonoBehaviour
         active.SetActive(false);
         if (state == Phase.DEFENDING)
         {
-            state = Phase.ATTACKING;
+            state = Phase.PREROUND;
+            StartCoroutine(Preround(Phase.ATTACKING));
+            if (offcool != 0) 
+            {
+                offcool -= 1; 
+            }
             active = swordM;
             active.SetActive(true);
             height = 1;
@@ -184,7 +232,13 @@ public class PlayerControl : MonoBehaviour
         }
         else if (state == Phase.ATTACKING)
         {
-            state = Phase.DEFENDING;
+            fury = false;
+            state = Phase.PREROUND;
+            StartCoroutine(Preround(Phase.DEFENDING));
+            if (defcool != 0)
+            {
+                defcool -= 1;
+            }
             active = shieldM;
             active.SetActive(true);
             height = 1;
@@ -218,8 +272,15 @@ public class PlayerControl : MonoBehaviour
         if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().acting)
         {
             Debug.Log("block");
-            TheTextDisplay.StrikeBlocked(first);
-            StartCoroutine(Hitstun());
+            if (!fury)
+            {
+                TheTextDisplay.StrikeBlocked(first);
+                StartCoroutine(Hitstun());
+            }
+            else 
+            {
+                StartCoroutine(Furystun());
+            }
         }
         else
         {
@@ -255,15 +316,34 @@ public class PlayerControl : MonoBehaviour
         opponent.GetComponent<PlayerControl>().acting = true;
         yield return new WaitForSeconds(0.2f);
         opponent.GetComponent<PlayerControl>().acting = true;
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.3f);
         active.GetComponent<SwordMovement>().Return();
+        yield return new WaitForSeconds(0.1f);
         Switch();
         opponent.GetComponent<PlayerControl>().Switch();
+        gameManager.NewRound();
+    }
+
+    IEnumerator Furystun()
+    {
+        opponent.GetComponent<PlayerControl>().acting = true;
+        yield return new WaitForSeconds(0.2f);
+        opponent.GetComponent<PlayerControl>().acting = true;
+        yield return new WaitForSeconds(0.3f);
+        active.GetComponent<SwordMovement>().Return();
+        acting = false;
+        opponent.GetComponent<PlayerControl>().acting = false;
     }
 
     IEnumerator Repo() {
         yield return new WaitForSeconds(0.6f);
         gameManager.Reposition(playerCount);
+    }
+
+    IEnumerator Preround(Phase next) {
+        moveto = next;
+        yield return new WaitForSeconds(2);
+        state = next;
     }
 
 

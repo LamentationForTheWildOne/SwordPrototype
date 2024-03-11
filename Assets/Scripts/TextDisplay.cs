@@ -8,12 +8,20 @@ public class TextDisplay : MonoBehaviour
     //Players
     public PlayerControl Player1;
     public PlayerControl Player2;
+    public GameManager gameManager;
 
     //Text boxes
     public TMP_Text RoundAndTimerDisplay;
     public TMP_Text Scoreboard;
     public TMP_Text P1Block;
     public TMP_Text P2Block;
+    public TMP_Text Advantage;
+    public GameObject Info;
+
+    public TMP_Text P1Off;
+    public TMP_Text P2Off;
+    public TMP_Text P1Def;
+    public TMP_Text P2Def;
 
     public TMP_Text P1Hit;
     public TMP_Text P2Hit;
@@ -34,6 +42,8 @@ public class TextDisplay : MonoBehaviour
     bool BlockTextVisible;
     public float MaxBlockTimer;
     public float BlockTimer;
+
+    public bool Counting = true;
 
 
 
@@ -73,24 +83,31 @@ public class TextDisplay : MonoBehaviour
             Player2.Switch();
             BlockTimer = MaxBlockTimer;
             BlockTextVisible = true;
-            RoundTimer = MaxTime;
-            RoundCountdown = 1;
-            RoundNum += 1;
+            Counting = false;
+            gameManager.NewRound();
+
             UpdateDisplay();
         }
-        else RoundAndTimerDisplay.text = "Round " + RoundNum + ":\n" + RoundTimer;
-        Scoreboard.text = P1Score + " - " + P2Score;
+        else if (Counting)
+        {
+            RoundAndTimerDisplay.text = "Round " + RoundNum + ":\n" + RoundTimer;
+            Scoreboard.text = P1Score + " - " + P2Score;
+        }
     }
 
     //Updates the RoundTimer
     void UpdateRoundTimer()
     {
-        RoundCountdown -= Time.deltaTime;
-        if (RoundCountdown <= 0)
+        if (Counting)
         {
-            RoundTimer -= 1;
-            UpdateDisplay();
-            RoundCountdown = 1;
+            RoundCountdown -= Time.deltaTime;
+
+            if (RoundCountdown <= 0)
+            {
+                RoundTimer -= 1;
+                UpdateDisplay();
+                RoundCountdown = 1;
+            }
         }
     }
 
@@ -132,11 +149,10 @@ public class TextDisplay : MonoBehaviour
         }
 
         BlockTimer = MaxBlockTimer;
-        BlockTextVisible = true; 
-        RoundTimer = MaxTime;
-        RoundCountdown = 1;
-        RoundNum += 1;
+        BlockTextVisible = true;
         UpdateDisplay();
+        Counting = false;
+
     }
 
 
@@ -148,9 +164,8 @@ public class TextDisplay : MonoBehaviour
         else P1Block.text = "Block!";
         BlockTextVisible = true;
         BlockTimer = MaxBlockTimer;
-        RoundTimer = MaxTime;
-        RoundCountdown = 1;
-        RoundNum += 1;
         UpdateDisplay();
+        Counting = false;
+
     }
 }
