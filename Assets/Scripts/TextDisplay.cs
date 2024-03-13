@@ -57,7 +57,7 @@ public class TextDisplay : MonoBehaviour
     void Update()
     {
         UpdateRoundTimer();
-
+        //UpdateDisplay();
         if (BlockTextVisible)
         {
             BlockTimer -= Time.deltaTime;
@@ -86,7 +86,7 @@ public class TextDisplay : MonoBehaviour
             Counting = false;
             gameManager.NewRound();
 
-            UpdateDisplay();
+            
         }
         else if (Counting)
         {

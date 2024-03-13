@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
-public enum Phase { ATTACKING, PREROUND, DEFENDING }
+public enum Phase { ATTACKING, PREROUND, DEFENDING, GAMEOVER }
 
 public class PlayerControl : MonoBehaviour
 {
@@ -43,6 +43,7 @@ public class PlayerControl : MonoBehaviour
 
     // Variable setting height
     public int height;
+    int hitHeight;
 
     // Bool to prevent player from changing height while attacking/defending
     public bool acting;
@@ -214,13 +215,16 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    public void StartPreround(Phase next) 
+    {
+        StartCoroutine(Preround(next));
+    }
+
     public void Switch()
     {
         active.SetActive(false);
         if (state == Phase.DEFENDING)
         {
-            state = Phase.PREROUND;
-            StartCoroutine(Preround(Phase.ATTACKING));
             if (offcool != 0) 
             {
                 offcool -= 1; 
@@ -233,8 +237,6 @@ public class PlayerControl : MonoBehaviour
         else if (state == Phase.ATTACKING)
         {
             fury = false;
-            state = Phase.PREROUND;
-            StartCoroutine(Preround(Phase.DEFENDING));
             if (defcool != 0)
             {
                 defcool -= 1;
@@ -288,6 +290,19 @@ public class PlayerControl : MonoBehaviour
             TheTextDisplay.StrikeLanded(first);
             StartCoroutine(Hitstun());
             StartCoroutine(Repo());
+            switch (height) 
+            {
+                case 0:
+                    hitHeight = 3;
+                    break;
+                case 1:
+                    hitHeight = 2;
+                    break;
+                case 2:
+                    hitHeight = 1;
+                    break;
+            }
+
 
         }
 
@@ -338,6 +353,7 @@ public class PlayerControl : MonoBehaviour
     IEnumerator Repo() {
         yield return new WaitForSeconds(0.6f);
         gameManager.Reposition(playerCount);
+        gameManager.PlayerHit(playerCount, hitHeight);
     }
 
     IEnumerator Preround(Phase next) {
