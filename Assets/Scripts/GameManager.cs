@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
     public void Impatient() 
     {
         NewRoundTime -= 5;
+        Debug.Log("Impatient");
     }
 
     IEnumerator GMPreround() 
