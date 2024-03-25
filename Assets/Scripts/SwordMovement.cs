@@ -8,13 +8,21 @@ public class SwordMovement : MonoBehaviour
 {
 
     public int spd;
-    private Vector3 startPos;
+    public GameObject Player;
     public int flip;
+    public Vector3 startPos;
     // Start is called before the first frame update
+
+
+    private void Awake()
+    {
+        startPos = transform.position;
+        gameObject.SetActive(false);
+    }
     void Start()
     {
 
-        startPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        
     }
 
     // Update is called once per frame
@@ -35,7 +43,7 @@ public class SwordMovement : MonoBehaviour
 
     public void Return() 
     {
-        transform.position = startPos;
+        transform.position = new Vector3(Player.transform.position.x + (1.8f * flip), startPos.y);
     }
 
     IEnumerator AttackTimer() 
@@ -50,6 +58,6 @@ public class SwordMovement : MonoBehaviour
         spd = 10;
         yield return new WaitForSeconds(0.2f);
         spd = 0;
-        transform.position = startPos;
+        Return();
     }
 }
