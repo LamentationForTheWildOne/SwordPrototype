@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     public Image p2bdisplay;
     public Image p2ldisplay;
 
+    public List<Sprite> HeadSprites;
+    public List<Sprite> ChestSprites;
+    public List<Sprite> TorsoSprites;
+
     public int MaxRoundTime;
     public int NewRoundTime;
 
@@ -192,95 +196,101 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
-            switch (p1head) 
-            {
-                case 0:
-                    p1hdisplay.color = Color.white;
-                    break;
-                case 1:
-                    p1hdisplay.color = Color.yellow;
-                    break;
-                case 2:
-                    p1hdisplay.color = Color.red;
-                    break;
-                case 3:
-                    p1dead = true;
-                    break;
-            }
-            switch (p1body)
-            {
-                case 0:
-                    p1bdisplay.color = Color.white;
-                    break;
-                case 1:
-                    p1bdisplay.color = Color.yellow;
-                    break;
-                case 2:
-                    p1bdisplay.color = Color.red;
-                    break;
+        switch (p1head) 
+        {
+            case 0:
+                p1hdisplay.sprite = HeadSprites[0];
+                break;
+            case 1:
+                p1hdisplay.sprite = HeadSprites[1];
+                break;
+            case 2:
+                p1hdisplay.sprite = HeadSprites[2];
+                break;
             case 3:
                 p1dead = true;
+                p1hdisplay.sprite = HeadSprites[3];
                 break;
         }
-            switch (p1legs)
-            {
-                case 0:
-                    p1ldisplay.color = Color.white;
-                    break;
-                case 1:
-                    p1ldisplay.color = Color.yellow;
-                    break;
-                case 2:
-                    p1ldisplay.color = Color.red;
-                    break;
+        switch (p1body)
+        {
+            case 0:
+                p1bdisplay.sprite = ChestSprites[0];
+                break;
+            case 1:
+                p1bdisplay.sprite = ChestSprites[1];
+                break;
+            case 2:
+                p1bdisplay.sprite = ChestSprites[2];
+                break;
             case 3:
                 p1dead = true;
+                p1bdisplay.sprite = ChestSprites[3];
+                break;
+        }
+        switch (p1legs)
+        {
+            case 0:
+                p1ldisplay.sprite = TorsoSprites[0];
+                break;
+            case 1:
+                p1ldisplay.sprite = TorsoSprites[1];
+                break;
+            case 2:
+                p1ldisplay.sprite = TorsoSprites[2];
+                break;
+            case 3:
+                p1dead = true;
+                p1ldisplay.sprite = TorsoSprites[3];
                 break;
         }
 
-            switch (p2head)
-            {
-                case 0:
-                    p2hdisplay.color = Color.white;
-                    break;
-                case 1:
-                    p2hdisplay.color = Color.yellow;
-                    break;
-                case 2:
-                    p2hdisplay.color = Color.red;
-                    break;
+        switch (p2head)
+        {
+            case 0:
+                p2hdisplay.sprite = HeadSprites[0];
+                break;
+            case 1:
+                p2hdisplay.sprite = HeadSprites[1];
+                break;
+            case 2:
+                p2hdisplay.sprite = HeadSprites[2];
+                break;
             case 3:
                 p2dead = true;
+                p2hdisplay.sprite = HeadSprites[3];
                 break;
         }
-            switch (p2body)
-            {
-                case 0:
-                    p2bdisplay.color = Color.white;
-                    break;
-                case 1:
-                    p2bdisplay.color = Color.yellow;
-                    break;
-                case 2:
-                    p2bdisplay.color = Color.red;
-                    break;
+        switch (p2body)
+        {
+            case 0:
+                p2bdisplay.sprite = ChestSprites[0];
+                break;
+            case 1:
+                p2bdisplay.sprite = ChestSprites[1];
+                break;
+            case 2:
+                p2bdisplay.sprite = ChestSprites[2];
+                break;
             case 3:
                 p2dead = true;
+                p2bdisplay.sprite = ChestSprites[3];
                 break;
         }
-            switch (p2legs)
-            {
-                case 0:
-                    p2ldisplay.color = Color.white;
-                    break;
-                case 1:
-                    p2ldisplay.color = Color.yellow;
-                    break;
-                case 2:
-                    p2ldisplay.color = Color.red;
-                    break;
+        switch (p2legs)
+        {
+            case 0:
+                p2ldisplay.sprite = TorsoSprites[0];
+                break;
+            case 1:
+                p2ldisplay.sprite = TorsoSprites[1];
+                break;
+            case 2:
+                p2ldisplay.sprite = TorsoSprites[2];
+                break;
             case 3:
                 p2dead = true;
+                p2ldisplay.sprite = TorsoSprites[3];
                 break;
         }
 
