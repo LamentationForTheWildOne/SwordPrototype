@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public int MaxRoundTime;
     public int NewRoundTime;
 
+    public bool paused;
+
     public int p1head;
     public int p1body;
     public int p1legs;
@@ -294,5 +296,24 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) {
             SceneManager.LoadScene("Main");
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!paused)
+            {
+                paused = true;
+                Time.timeScale = 0;
+            } else if (paused) 
+            {
+                StartCoroutine(Unpause());
+                paused = false;
+            }
+        }
+    }
+
+    IEnumerator Unpause() 
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        Time.timeScale = 1;
     }
 }
