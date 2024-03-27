@@ -37,7 +37,7 @@ public class SceneManagerScript : MonoBehaviour
 
     IEnumerator TransitionToScene(string sceneName)
     {
-        fadeAnimator.SetTrigger("Fade");
+        fadeAnimator.SetTrigger("Fadeout");
         
         yield return new WaitForSeconds(transitionTime);
         
