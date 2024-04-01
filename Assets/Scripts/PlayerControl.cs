@@ -110,6 +110,7 @@ public class PlayerControl : MonoBehaviour
 
                         case 0:
                             fury = true;
+                            Debug.Log("Fury");
                             break;
                     
                     }
@@ -348,6 +349,7 @@ public class PlayerControl : MonoBehaviour
         active.GetComponent<SwordMovement>().Return();
         acting = false;
         opponent.GetComponent<PlayerControl>().acting = false;
+
     }
 
     IEnumerator Repo() {
