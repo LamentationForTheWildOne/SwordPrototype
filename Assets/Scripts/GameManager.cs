@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    
     public int pos = 0;
     public int scaling;
     public int round;
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public int MaxRoundTime;
     public int NewRoundTime;
+
+    public bool paused;
 
     public int p1head;
     public int p1body;
@@ -300,5 +302,29 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-   
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene("Main");
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!paused)
+            {
+                paused = true;
+                Time.timeScale = 0;
+            } else if (paused) 
+            {
+                StartCoroutine(Unpause());
+                paused = false;
+            }
+        }
+    }
+
+    IEnumerator Unpause() 
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        Time.timeScale = 1;
+    }
 }
