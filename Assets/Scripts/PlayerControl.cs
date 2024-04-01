@@ -7,6 +7,12 @@ public enum Phase { ATTACKING, PREROUND, DEFENDING, GAMEOVER }
 
 public class PlayerControl : MonoBehaviour
 {
+    float counter;
+    Vector3 startPos;
+    Vector3 endPos;
+    Vector3 midPos;
+    public int direction;
+
     public GameObject opponent;
     public GameManager gameManager;
     public AbilityList abilityList;
@@ -58,6 +64,11 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        counter = 1.0f;
+        startPos = transform.position;
+        endPos = transform.position;
+        midPos = startPos + (endPos -startPos)/2 +Vector3.up * 5.0f;
+
         // Sets middle sword as active by default for player one and middle shield for player 2
         if (first)
         {
@@ -134,6 +145,14 @@ public class PlayerControl : MonoBehaviour
 
             }
         
+        }
+
+        if (counter < 1.0f) {
+            counter += 1.0f * Time.deltaTime;
+
+            Vector3 m1 = Vector3.Lerp(startPos, midPos, counter);
+            Vector3 m2 = Vector3.Lerp(midPos, endPos, counter);
+            transform.position = Vector3.Lerp(m1, m2, counter);
         }
     }
 
@@ -249,6 +268,14 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    public void Knockback() 
+    {
+        counter = 0.0f;
+        startPos = transform.position;
+        endPos = new Vector2(gameManager.transform.position.x + ((10 * gameManager.scaling) * direction), gameManager.transform.position.y - 0.4f);
+        midPos = startPos + (endPos - startPos) / 2 + Vector3.up * 5.0f;
+    }
+
 
     // gives the guard a recovery time
     IEnumerator ShieldCount() {
@@ -278,7 +305,7 @@ public class PlayerControl : MonoBehaviour
             if (!fury)
             {
                 TheTextDisplay.StrikeBlocked(first);
-                StartCoroutine(Hitstun());
+                StartCoroutine(Blockstun());
             }
             else 
             {
@@ -291,6 +318,7 @@ public class PlayerControl : MonoBehaviour
             TheTextDisplay.StrikeLanded(first);
             StartCoroutine(Hitstun());
             StartCoroutine(Repo());
+            opponent.GetComponent<PlayerControl>().Knockback();
             switch (height) 
             {
                 case 0:
@@ -334,6 +362,19 @@ public class PlayerControl : MonoBehaviour
         opponent.GetComponent<PlayerControl>().acting = true;
         yield return new WaitForSeconds(0.3f);
         active.GetComponent<SwordMovement>().Return();
+        yield return new WaitForSeconds(1.5f);
+        Switch();
+        opponent.GetComponent<PlayerControl>().Switch();
+        gameManager.NewRound();
+    }
+
+    IEnumerator Blockstun()
+    {
+        opponent.GetComponent<PlayerControl>().acting = true;
+        yield return new WaitForSeconds(0.2f);
+        opponent.GetComponent<PlayerControl>().acting = true;
+        yield return new WaitForSeconds(0.3f);
+        active.GetComponent<SwordMovement>().Return();
         yield return new WaitForSeconds(0.1f);
         Switch();
         opponent.GetComponent<PlayerControl>().Switch();
@@ -353,7 +394,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     IEnumerator Repo() {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(2.0f);
         gameManager.Reposition(playerCount);
         gameManager.PlayerHit(playerCount, hitHeight);
     }
