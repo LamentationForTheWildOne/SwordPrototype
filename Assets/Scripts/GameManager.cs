@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         p2control = p2.GetComponent<PlayerControl>();
     }
 
-    public void Reposition(int playernum) 
+    public void Reposition(int playernum, int damage) 
     {
         if (playernum == 1)
         {
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         {
             direction = -1;
         }
-        pos = ((10 * scaling) * direction);
+        pos = ((damage * scaling) * direction);
         transform.position = new Vector2(transform.position.x + pos, transform.position.y);
         p1.transform.position = new Vector2(transform.position.x - 3, p1.transform.position.y);
         p2.transform.position = new Vector2(transform.position.x + 3, p2.transform.position.y);

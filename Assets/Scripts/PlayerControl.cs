@@ -13,6 +13,8 @@ public class PlayerControl : MonoBehaviour
     Vector3 midPos;
     public int direction;
 
+    public Animator animator;
+
     public GameObject opponent;
     public GameManager gameManager;
     public AbilityList abilityList;
@@ -40,6 +42,9 @@ public class PlayerControl : MonoBehaviour
 
     //Bools to hold buffs
     public bool fury = false;
+    public bool tc = false;
+    public bool an = false;
+    int baseDamage = 10;
 
     // Variable holding which sword/shield the player has raised
     public GameObject active;
@@ -64,6 +69,8 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>(); 
+
         counter = 1.0f;
         startPos = transform.position;
         endPos = transform.position;
@@ -74,14 +81,39 @@ public class PlayerControl : MonoBehaviour
         {
             state = Phase.ATTACKING;
             active = swordM;
+            animator.SetInteger("SwordHeight", 0);
+            animator.SetBool("Attacking", true);
         }
         else
         {
             state = Phase.DEFENDING;
             active = shieldM;
+            animator.SetInteger("BlockHeight", 0);
+            animator.SetBool("Attacking", false);
         }
         active.SetActive(true);
         height = 1;
+
+        StartCoroutine(Fill());
+    }
+
+    public void Ability() 
+    {
+        switch (abilityList.cSkill)
+        {
+
+            case 0:
+                tc = true;
+                baseDamage = 8;
+                Debug.Log("Thousand Cuts");
+                break;
+            case 1:
+                an = true;
+                baseDamage = 12;
+                Debug.Log("All or Nothing");
+                break;
+        }
+
     }
 
     // Update is called once per frame
@@ -164,14 +196,17 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
             {
                 SetShieldPosition(2); // High position
+                animator.SetInteger("BlockHeight", -1);
             }
             else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
             {
                 SetShieldPosition(0); // Low position
+                animator.SetInteger("BlockHeight", 1);
             }
             else
             {
                 ResetShieldPosition(); // Neutral/middle position
+                
             }
         }
         else if (state == Phase.ATTACKING) // ATTACKING phase retains original one-time press behavior
@@ -179,14 +214,17 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
             {
                 SetSwordPosition(2); // High position
+                animator.SetInteger("SwordHeight", -1);
             }
             else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
             {
                 SetSwordPosition(0); // Low position
+                animator.SetInteger("SwordHeight", 1);
             }
             else
             {
                 ResetSwordPosition(); // Neutral/middle position
+                
             }
         }
     }
@@ -199,6 +237,7 @@ public class PlayerControl : MonoBehaviour
             active.SetActive(false);
             active = shieldM;
             active.SetActive(true);
+            animator.SetInteger("BlockHeight", 0);
         }
     }
 
@@ -221,6 +260,7 @@ public class PlayerControl : MonoBehaviour
             active.SetActive(false);
             active = swordM;
             active.SetActive(true);
+            animator.SetInteger("SwordHeight", 0);
         }
     }
 
@@ -251,18 +291,24 @@ public class PlayerControl : MonoBehaviour
             }
             active = swordM;
             active.SetActive(true);
+            animator.SetBool("Attacking", true);
+            animator.SetInteger("SwordHeight", 0);
             height = 1;
             acting = false;
         }
         else if (state == Phase.ATTACKING)
         {
             fury = false;
+
+
             if (defcool != 0)
             {
                 defcool -= 1;
             }
             active = shieldM;
             active.SetActive(true);
+            animator.SetBool("Attacking", false);
+            animator.SetInteger("BlockHeight", 0);
             height = 1;
             acting = false;
         }
@@ -272,7 +318,7 @@ public class PlayerControl : MonoBehaviour
     {
         counter = 0.0f;
         startPos = transform.position;
-        endPos = new Vector2(gameManager.transform.position.x + ((10 * gameManager.scaling) * direction), gameManager.transform.position.y - 0.4f);
+        endPos = new Vector2(gameManager.transform.position.x + ((opponent.GetComponent<PlayerControl>().baseDamage * gameManager.scaling) * direction), gameManager.transform.position.y - 0.4f);
         midPos = startPos + (endPos - startPos) / 2 + Vector3.up * 5.0f;
     }
 
@@ -291,13 +337,24 @@ public class PlayerControl : MonoBehaviour
     //give the attack some start up and then checks to see if the opponent is blocking correctly
     IEnumerator SwordCount()
     {
-       // MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        // MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
         //Color originalColor = meshRenderer.material.color;
-       // meshRenderer.material.color = Color.red;
-        active.GetComponent<SwordMovement>().Thrust();
-
-        yield return new WaitForSeconds(0.3f); 
-        
+        // meshRenderer.material.color = Color.red;
+        if (!an && !tc)
+        {
+            active.GetComponent<SwordMovement>().Thrust();
+            yield return new WaitForSeconds(0.3f);
+        }
+        if (an) 
+        {
+            active.GetComponent<SwordMovement>().ANThrust();
+            yield return new WaitForSeconds(0.4f);
+        }
+        if (tc)
+        {
+            active.GetComponent<SwordMovement>().TCThrust();
+            yield return new WaitForSeconds(0.2f);
+        }
 
         if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().acting)
         {
@@ -395,7 +452,7 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Repo() {
         yield return new WaitForSeconds(2.0f);
-        gameManager.Reposition(playerCount);
+        gameManager.Reposition(playerCount, baseDamage);
         gameManager.PlayerHit(playerCount, hitHeight);
     }
 
@@ -403,6 +460,12 @@ public class PlayerControl : MonoBehaviour
         moveto = next;
         yield return new WaitForSeconds(2);
         state = next;
+    }
+
+    IEnumerator Fill() 
+    {
+        yield return new WaitForSeconds(0.1f);
+        Ability();
     }
 
 

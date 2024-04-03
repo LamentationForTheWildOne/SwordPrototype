@@ -36,6 +36,15 @@ public class SwordMovement : MonoBehaviour
         StartCoroutine(AttackTimer());    
     }
 
+    public void TCThrust() 
+    {
+        StartCoroutine (TCAttackTimer());
+    }
+    public void ANThrust()
+    {
+        StartCoroutine(ANAttackTimer());
+    }
+
     public void Feint()
     {
         StartCoroutine(FeintTimer());
@@ -50,6 +59,20 @@ public class SwordMovement : MonoBehaviour
     {
         spd = 10;
         yield return new WaitForSeconds(0.3f);
+        spd = 0;
+    }
+
+    IEnumerator TCAttackTimer()
+    {
+        spd = 13;
+        yield return new WaitForSeconds(0.2f);
+        spd = 0;
+    }
+
+    IEnumerator ANAttackTimer()
+    {
+        spd = 7;
+        yield return new WaitForSeconds(0.4f);
         spd = 0;
     }
 
