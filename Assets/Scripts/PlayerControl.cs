@@ -41,7 +41,9 @@ public class PlayerControl : MonoBehaviour
     public int playerCount;
 
     //Bools to hold buffs
+    public bool charge = false;
     public bool fury = false;
+    public bool tower = false;
     public bool tc = false;
     public bool an = false;
     int baseDamage = 10;
@@ -58,6 +60,10 @@ public class PlayerControl : MonoBehaviour
 
     // Bool to prevent player from changing height while attacking/defending
     public bool acting;
+
+    public bool blocking = false;
+
+    public bool parry = false;
 
     public bool first;
 
@@ -133,14 +139,24 @@ public class PlayerControl : MonoBehaviour
                 }
                 else if (state == Phase.DEFENDING)
                 {
+                    blocking = true;
                     StartCoroutine(ShieldCount());
                 }
             }
 
-            if (Input.GetButtonDown("Feint" + playerCount) | Input.GetKeyDown(Feint) && state == Phase.ATTACKING)
+            if (Input.GetButtonDown("Feint" + playerCount) | Input.GetKeyDown(Feint))
             {
                 acting = true;
-                StartCoroutine(FeintCount());
+                if (state == Phase.ATTACKING)
+                {
+                    StartCoroutine(FeintCount());
+                }
+                else if (state == Phase.DEFENDING)
+                {
+                    parry = true;
+                    StartCoroutine(ParryCount());
+                }
+                
             }
         }
         if (state == Phase.PREROUND) {
@@ -155,6 +171,12 @@ public class PlayerControl : MonoBehaviour
                             fury = true;
                             Debug.Log("Fury");
                             break;
+                        case 1:
+                            charge = true;
+                            Debug.Log("Charge");
+                            baseDamage = 15;
+                            break;
+
                     
                     }
                 
@@ -170,6 +192,9 @@ public class PlayerControl : MonoBehaviour
 
                         case 0:
                             gameManager.Impatient();
+                            break;
+                        case 1:
+                            tower = true;
                             break;
 
                     }
@@ -193,20 +218,41 @@ public class PlayerControl : MonoBehaviour
         // Adjust behavior for continuous input during DEFENDING phase
         if (state == Phase.DEFENDING)
         {
-            if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
+            if (!tower)
             {
-                SetShieldPosition(2); // High position
-                animator.SetInteger("BlockHeight", -1);
+                if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
+                {
+                    SetShieldPosition(2); // High position
+                    animator.SetInteger("BlockHeight", -1);
+                }
+                else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
+                {
+                    SetShieldPosition(0); // Low position
+                    animator.SetInteger("BlockHeight", 1);
+                }
+                else
+                {
+                    ResetShieldPosition(); // Neutral/middle position
+
+                }
             }
-            else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
+            else 
             {
-                SetShieldPosition(0); // Low position
-                animator.SetInteger("BlockHeight", 1);
-            }
-            else
-            {
-                ResetShieldPosition(); // Neutral/middle position
-                
+                if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
+                {
+                    SetTowerPositionUp(); // High position
+                    //animator.SetInteger("BlockHeight", -1);
+                }
+                else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
+                {
+                    SetTowerPositionDown(); // Low position
+                    //animator.SetInteger("BlockHeight", 1);
+                }
+                else
+                {
+                    SetTowerPositionDown(); // Neutral/middle position
+
+                }
             }
         }
         else if (state == Phase.ATTACKING) // ATTACKING phase retains original one-time press behavior
@@ -252,6 +298,29 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    void SetTowerPositionUp() 
+    {
+        if (height != 2) 
+        {
+            shieldL.SetActive(false);
+            active = shieldH;
+            height = 2;
+            active.SetActive(true);
+        }
+    }
+
+    void SetTowerPositionDown()
+    {
+        if (height != 0)
+        {
+            shieldH.SetActive(false);
+            active = shieldL;
+            height = 0;
+            active.SetActive(true);
+        }
+
+    }
+
     void ResetSwordPosition()
     {
         if (height != 1)
@@ -285,6 +354,12 @@ public class PlayerControl : MonoBehaviour
         active.SetActive(false);
         if (state == Phase.DEFENDING)
         {
+            if (tower) 
+            {
+                tower = false;
+                shieldM.SetActive(false);
+            }
+
             if (offcool != 0) 
             {
                 offcool -= 1; 
@@ -299,7 +374,8 @@ public class PlayerControl : MonoBehaviour
         else if (state == Phase.ATTACKING)
         {
             fury = false;
-
+            charge = false;
+            
 
             if (defcool != 0)
             {
@@ -322,6 +398,14 @@ public class PlayerControl : MonoBehaviour
         midPos = startPos + (endPos - startPos) / 2 + Vector3.up * 5.0f;
     }
 
+    public void ParryKnockback() 
+    {
+        counter = 0.0f;
+        startPos = transform.position;
+        endPos = new Vector2(gameManager.transform.position.x + ((5 * gameManager.scaling) * direction), gameManager.transform.position.y - 0.4f);
+        midPos = startPos + (endPos - startPos) / 2 + Vector3.up * 5.0f;
+    }
+
 
     // gives the guard a recovery time
     IEnumerator ShieldCount() {
@@ -330,7 +414,18 @@ public class PlayerControl : MonoBehaviour
         meshRenderer.material.color = Color.blue;
         yield return new WaitForSeconds(0.5f);
         meshRenderer.material.color = originalColor;
+        blocking = false;
+        acting = false;
+    }
 
+    IEnumerator ParryCount()
+    {
+        MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
+        Color originalColor = meshRenderer.material.color;
+        meshRenderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        meshRenderer.material.color = originalColor;
+        parry = false;
         acting = false;
     }
 
@@ -356,7 +451,7 @@ public class PlayerControl : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
-        if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().acting)
+        if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().blocking || height == 1 && opponent.GetComponent<PlayerControl>().tower && opponent.GetComponent<PlayerControl>().blocking)
         {
             Debug.Log("block");
             if (!fury)
@@ -364,11 +459,19 @@ public class PlayerControl : MonoBehaviour
                 TheTextDisplay.StrikeBlocked(first);
                 StartCoroutine(Blockstun());
             }
-            else 
+            else
             {
                 StartCoroutine(Furystun());
             }
         }
+        else if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().parry || height == 1 && opponent.GetComponent<PlayerControl>().tower && opponent.GetComponent<PlayerControl>().parry) 
+        {
+            Debug.Log("parry");
+            TheTextDisplay.StrikeBlocked(first);
+            StartCoroutine(Hitstun());
+            StartCoroutine(ParryRepo());
+            //ParryKnockback();
+        } 
         else
         {
             Debug.Log("hit");
@@ -456,7 +559,16 @@ public class PlayerControl : MonoBehaviour
         gameManager.PlayerHit(playerCount, hitHeight);
     }
 
+    IEnumerator ParryRepo()
+    {
+        yield return new WaitForSeconds(0.6f);
+        ParryKnockback();
+        yield return new WaitForSeconds(1.4f);
+        gameManager.Reposition(-(playerCount), 5);
+    }
+
     IEnumerator Preround(Phase next) {
+        baseDamage = 10;
         moveto = next;
         yield return new WaitForSeconds(2);
         state = next;

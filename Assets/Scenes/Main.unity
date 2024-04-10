@@ -1182,13 +1182,17 @@ MonoBehaviour:
   Feint: 97
   playerAxes: Vertical1
   playerCount: 1
+  charge: 0
   fury: 0
+  tower: 0
   tc: 0
   an: 0
   active: {fileID: 0}
   state: 0
   height: 0
   acting: 0
+  blocking: 0
+  parry: 0
   first: 1
   TheTextDisplay: {fileID: 2404899}
 --- !u!114 &291678709
@@ -1208,7 +1212,10 @@ MonoBehaviour:
   cSkill: 0
   oCool: 3
   dCool: 3
-  fury: 1
+  fury: 0
+  charge: 1
+  imp: 0
+  tower: 1
   tc: 1
   an: 0
 --- !u!212 &291678710
@@ -2186,13 +2193,17 @@ MonoBehaviour:
   Feint: 275
   playerAxes: Vertical2
   playerCount: 2
+  charge: 0
   fury: 0
+  tower: 0
   tc: 0
   an: 0
   active: {fileID: 0}
   state: 1
   height: 0
   acting: 0
+  blocking: 0
+  parry: 0
   first: 0
   TheTextDisplay: {fileID: 2404899}
 --- !u!65 &865475063
@@ -2255,6 +2266,9 @@ MonoBehaviour:
   oCool: 3
   dCool: 3
   fury: 0
+  charge: 0
+  imp: 0
+  tower: 0
   tc: 0
   an: 1
 --- !u!212 &865475069
