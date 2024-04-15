@@ -46,6 +46,7 @@ public class PlayerControl : MonoBehaviour
     public bool tower = false;
     public bool tc = false;
     public bool an = false;
+    public bool parrySkill = false;
     int baseDamage = 10;
 
     // Variable holding which sword/shield the player has raised
@@ -118,6 +119,10 @@ public class PlayerControl : MonoBehaviour
                 baseDamage = 12;
                 Debug.Log("All or Nothing");
                 break;
+            case 2:
+                parrySkill = true;
+                Debug.Log("Parry");
+                break;
         }
 
     }
@@ -151,7 +156,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     StartCoroutine(FeintCount());
                 }
-                else if (state == Phase.DEFENDING)
+                else if (state == Phase.DEFENDING && parrySkill)
                 {
                     parry = true;
                     StartCoroutine(ParryCount());
@@ -426,6 +431,7 @@ public class PlayerControl : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         meshRenderer.material.color = originalColor;
         parry = false;
+        yield return new WaitForSeconds(0.4f);
         acting = false;
     }
 
