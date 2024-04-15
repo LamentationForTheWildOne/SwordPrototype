@@ -16,6 +16,7 @@ public class AbilityList : MonoBehaviour
     public bool tower;
     public bool tc;
     public bool an;
+    public bool p;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,11 @@ public class AbilityList : MonoBehaviour
         if (an)
         {
             cSkill = 1;
+        }
+
+        if (p) 
+        {
+            cSkill = 2;
         }
     }
 
