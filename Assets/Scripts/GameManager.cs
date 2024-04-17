@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     public bool p1follow = false;
     public bool p2follow = false;
+    public float followSpeed = 1f;
 
 
 
@@ -352,13 +353,17 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (p1follow == true) {
-            transform.position = new Vector2(p1control.transform.position.x, p1control.transform.position.y);
-        }
-        if (p2follow == true)
+        Vector2 targetPosition = transform.position;
+        if (p1follow)
         {
-            transform.position = new Vector2(p2control.transform.position.x, p2control.transform.position.y);
+            targetPosition = new Vector2(p1control.transform.position.x, p1control.transform.position.y);
         }
+        else if (p2follow)
+        {
+            targetPosition = new Vector2(p2control.transform.position.x, p2control.transform.position.y);
+        }
+        transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime * followSpeed);
+        
     }
     public void SkillMenu()
     {
