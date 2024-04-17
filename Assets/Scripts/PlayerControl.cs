@@ -140,11 +140,13 @@ public class PlayerControl : MonoBehaviour
                 acting = true;
                 if (state == Phase.ATTACKING)
                 {
+                    animator.SetInteger("AttackS", 1);
                     StartCoroutine(SwordCount());
                 }
                 else if (state == Phase.DEFENDING)
                 {
                     blocking = true;
+                    animator.SetBool("Blocking", true);
                     StartCoroutine(ShieldCount());
                 }
             }
@@ -419,6 +421,7 @@ public class PlayerControl : MonoBehaviour
         meshRenderer.material.color = Color.blue;
         yield return new WaitForSeconds(0.5f);
         meshRenderer.material.color = originalColor;
+        animator.SetBool("Blocking", false);
         blocking = false;
         acting = false;
     }
@@ -445,16 +448,19 @@ public class PlayerControl : MonoBehaviour
         {
             active.GetComponent<SwordMovement>().Thrust();
             yield return new WaitForSeconds(0.3f);
+            animator.SetInteger("AttackS", 2);
         }
         if (an) 
         {
             active.GetComponent<SwordMovement>().ANThrust();
             yield return new WaitForSeconds(0.4f);
+            animator.SetInteger("AttackS", 2);
         }
         if (tc)
         {
             active.GetComponent<SwordMovement>().TCThrust();
             yield return new WaitForSeconds(0.2f);
+            animator.SetInteger("AttackS", 2);
         }
 
         if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().blocking || height == 1 && opponent.GetComponent<PlayerControl>().tower && opponent.GetComponent<PlayerControl>().blocking)
@@ -480,6 +486,7 @@ public class PlayerControl : MonoBehaviour
         } 
         else
         {
+            opponent.GetComponent<PlayerControl>().animator.SetBool("Damaged", true);
             Debug.Log("hit");
             TheTextDisplay.StrikeLanded(first);
             StartCoroutine(Hitstun());
@@ -516,6 +523,7 @@ public class PlayerControl : MonoBehaviour
         active.GetComponent<SwordMovement>().Feint();
 
         yield return new WaitForSeconds(0.2f);
+        animator.SetInteger("AttackS", 0);
 
         //meshRenderer.material.color = originalColor;
 
@@ -529,8 +537,10 @@ public class PlayerControl : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         active.GetComponent<SwordMovement>().Return();
         yield return new WaitForSeconds(1.5f);
+        animator.SetInteger("AttackS", 0);
         Switch();
         opponent.GetComponent<PlayerControl>().Switch();
+        opponent.GetComponent<PlayerControl>().animator.SetBool("Damaged", false);
         gameManager.NewRound();
     }
 
@@ -542,6 +552,7 @@ public class PlayerControl : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         active.GetComponent<SwordMovement>().Return();
         yield return new WaitForSeconds(0.1f);
+        animator.SetInteger("AttackS", 0);
         Switch();
         opponent.GetComponent<PlayerControl>().Switch();
         gameManager.NewRound();
@@ -555,6 +566,7 @@ public class PlayerControl : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         active.GetComponent<SwordMovement>().Return();
         acting = false;
+        animator.SetInteger("AttackS", 0);
         opponent.GetComponent<PlayerControl>().acting = false;
 
     }
