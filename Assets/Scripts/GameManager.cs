@@ -5,12 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
+
     public int pos = 0;
     public int scaling;
     public int round;
     public int direction;
     public GameObject p1;
     public GameObject p2;
+    public GameObject skills;
     public PlayerControl p1control;
     public PlayerControl p2control;
     public TextDisplay textDisplay;
@@ -314,12 +316,26 @@ public class GameManager : MonoBehaviour
             {
                 paused = true;
                 Time.timeScale = 0;
+                SkillMenu();
             } else if (paused) 
             {
                 StartCoroutine(Unpause());
                 paused = false;
+                SkillMenu();
             }
         }
+    }
+    public void SkillMenu()
+    {
+        if(paused == true )
+        {
+           skills.SetActive(true);
+        }
+        else
+        {
+            skills.SetActive(false);
+        }
+
     }
 
     IEnumerator Unpause() 
