@@ -477,8 +477,17 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("block");
             if (!fury)
             {
-                TheTextDisplay.StrikeBlocked(first);
-                StartCoroutine(Blockstun());
+                if (!charge)
+                {
+                    TheTextDisplay.StrikeBlocked(first);
+                    StartCoroutine(Blockstun());
+                }
+                else 
+                {
+                    TheTextDisplay.StrikeBlocked(first);
+                    StartCoroutine(Hitstun());
+                    StartCoroutine(ParryRepo());
+                }
             }
             else
             {
