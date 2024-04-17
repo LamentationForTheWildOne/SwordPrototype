@@ -8,40 +8,48 @@ public class AbilityList : MonoBehaviour
     public int oSkill, dSkill, cSkill;
     public int oCool, dCool;
     public bool fury, charge, imp, tower, tc, an, p;
+    public string offensive, defensive;
 
     public Button furyButton, chargeButton, impButton, towerButton, tcButton, anButton;
 
     void Start()
     {
+        offensive = "No Skill";
+        defensive = "No Skill";
         UpdateSkills();  
     }
 
     public void ActivateFury()
     {
+        offensive = "Fury";
         SetAbility(ref fury, true, furyButton);
         SetAbility(ref charge, false, chargeButton);
     }
 
     public void ActivateCharge()
     {
+        offensive = "Charge";
         SetAbility(ref charge, true, chargeButton);
         SetAbility(ref fury, false, furyButton);
     }
 
     public void ActivateImp()
     {
+        defensive = "Impatient";
         SetAbility(ref imp, true, impButton);
         SetAbility(ref tower, false, towerButton);
     }
 
     public void ActivateTower()
     {
+        defensive = "Tower";
         SetAbility(ref tower, true, towerButton);
         SetAbility(ref imp, false, impButton);
     }
 
     public void ActivateTc()
     {
+
         SetAbility(ref tc, true, tcButton);
         SetAbility(ref an, false, anButton);
     }

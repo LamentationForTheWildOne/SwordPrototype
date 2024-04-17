@@ -42,14 +42,20 @@ public class GameManager : MonoBehaviour
 
     public bool p1dead = false;
     public bool p2dead = false;
+    private AbilityList p1Abilities;
+    private AbilityList p2Abilities;
+
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        
         p1control = p1.GetComponent<PlayerControl>();
         p2control = p2.GetComponent<PlayerControl>();
+        p1Abilities = p1.GetComponent<AbilityList>();
+        p2Abilities = p2.GetComponent<AbilityList>();
     }
 
     public void Reposition(int playernum, int damage) 
@@ -129,10 +135,10 @@ public class GameManager : MonoBehaviour
                     p2control.StartPreround(Phase.DEFENDING);
                 }
 
-                textDisplay.P1Off.text = "Offensive: " + p1control.offcool;
-                textDisplay.P2Off.text = "Offensive: " + p2control.offcool;
-                textDisplay.P1Def.text = "Defensive: " + p1control.defcool;
-                textDisplay.P2Def.text = "Defensive: " + p2control.defcool;
+                textDisplay.P1Off.text = p1Abilities.offensive +": " + p1control.offcool;
+                textDisplay.P2Off.text = p2Abilities.offensive +": " + p2control.offcool;
+                textDisplay.P1Def.text = p1Abilities.defensive +": "+ p1control.defcool;
+                textDisplay.P2Def.text = p2Abilities.defensive +": " + p2control.defcool;
 
                 textDisplay.Advantage.text = "" + transform.position.x;
                 textDisplay.RoundAndTimerDisplay.text = "PREROUND";
@@ -306,6 +312,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.R)) {
             SceneManager.LoadScene("Main");
         }
