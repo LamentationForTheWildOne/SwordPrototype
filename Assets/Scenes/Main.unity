@@ -1499,12 +1499,12 @@ MonoBehaviour:
   p: 0
   offensive: 
   defensive: 
-  furyButton: {fileID: 0}
-  chargeButton: {fileID: 0}
-  impButton: {fileID: 0}
-  towerButton: {fileID: 0}
-  tcButton: {fileID: 0}
-  anButton: {fileID: 0}
+  furyButton: {fileID: 1719834967}
+  chargeButton: {fileID: 1334985846}
+  impButton: {fileID: 1247029641}
+  towerButton: {fileID: 711375898}
+  tcButton: {fileID: 2061383308}
+  anButton: {fileID: 743045987}
 --- !u!212 &291678710
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1970,6 +1970,7 @@ MonoBehaviour:
   p2dead: 0
   p1follow: 0
   p2follow: 0
+  followSpeed: 2
 --- !u!1 &347601602
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,12 +4288,12 @@ MonoBehaviour:
   p: 0
   offensive: 
   defensive: 
-  furyButton: {fileID: 0}
-  chargeButton: {fileID: 0}
-  impButton: {fileID: 0}
-  towerButton: {fileID: 0}
-  tcButton: {fileID: 0}
-  anButton: {fileID: 0}
+  furyButton: {fileID: 1451735012}
+  chargeButton: {fileID: 1052921304}
+  impButton: {fileID: 2026697390}
+  towerButton: {fileID: 1452325931}
+  tcButton: {fileID: 1570523179}
+  anButton: {fileID: 4254375}
 --- !u!212 &865475069
 SpriteRenderer:
   m_ObjectHideFlags: 0

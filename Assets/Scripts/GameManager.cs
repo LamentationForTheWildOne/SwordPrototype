@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     public bool p1follow = false;
     public bool p2follow = false;
-    public float followSpeed = 1f;
+    public float followSpeed;
 
 
 
