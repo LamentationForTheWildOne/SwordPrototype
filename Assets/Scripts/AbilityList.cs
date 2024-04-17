@@ -7,7 +7,7 @@ public class AbilityList : MonoBehaviour
 {
     public int oSkill, dSkill, cSkill;
     public int oCool, dCool;
-    public bool fury, charge, imp, tower, tc, an;
+    public bool fury, charge, imp, tower, tc, an, p;
 
     public Button furyButton, chargeButton, impButton, towerButton, tcButton, anButton;
 

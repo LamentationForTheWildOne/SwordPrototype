@@ -280,8 +280,6 @@ MonoBehaviour:
   RoundTimer: 0
   MaxRoundTimer: 0
   RoundCountdown: 0
-  LeftTimerBar: {fileID: 1703779414}
-  RightTimerBar: {fileID: 2071285749}
   MaxBlockTimer: 0.5
   BlockTimer: 0
   Counting: 1
@@ -890,7 +888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &168850197
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -967,7 +965,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 185159053}
-  - component: {fileID: 185159052}
   - component: {fileID: 185159051}
   - component: {fileID: 185159050}
   m_Layer: 0
@@ -1040,14 +1037,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &185159052
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185159049}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &185159053
 Transform:
   m_ObjectHideFlags: 0
@@ -1508,12 +1497,13 @@ MonoBehaviour:
   tower: 0
   tc: 0
   an: 0
-  furyButton: {fileID: 1719834967}
-  chargeButton: {fileID: 1334985846}
-  impButton: {fileID: 1247029641}
-  towerButton: {fileID: 711375898}
-  tcButton: {fileID: 2061383308}
-  anButton: {fileID: 743045987}
+  p: 0
+  furyButton: {fileID: 0}
+  chargeButton: {fileID: 0}
+  impButton: {fileID: 0}
+  towerButton: {fileID: 0}
+  tcButton: {fileID: 0}
+  anButton: {fileID: 0}
 --- !u!212 &291678710
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1940,7 +1930,7 @@ MonoBehaviour:
   direction: 0
   p1: {fileID: 291678703}
   p2: {fileID: 865475061}
-  skills: {fileID: 1292736900}
+  skills: {fileID: 0}
   p1control: {fileID: 291678708}
   p2control: {fileID: 865475062}
   textDisplay: {fileID: 2404899}
@@ -4289,12 +4279,13 @@ MonoBehaviour:
   tower: 0
   tc: 0
   an: 0
-  furyButton: {fileID: 1451735012}
-  chargeButton: {fileID: 1052921304}
-  impButton: {fileID: 2026697390}
-  towerButton: {fileID: 1452325931}
-  tcButton: {fileID: 1570523179}
-  anButton: {fileID: 4254375}
+  p: 0
+  furyButton: {fileID: 0}
+  chargeButton: {fileID: 0}
+  impButton: {fileID: 0}
+  towerButton: {fileID: 0}
+  tcButton: {fileID: 0}
+  anButton: {fileID: 0}
 --- !u!212 &865475069
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4377,7 +4368,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 875843325}
-  - component: {fileID: 875843324}
   - component: {fileID: 875843323}
   - component: {fileID: 875843322}
   - component: {fileID: 875843326}
@@ -4451,14 +4441,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &875843324
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 875843321}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &875843325
 Transform:
   m_ObjectHideFlags: 0
@@ -4635,7 +4617,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 935798614}
-  - component: {fileID: 935798613}
   - component: {fileID: 935798612}
   - component: {fileID: 935798611}
   - component: {fileID: 935798615}
@@ -4709,14 +4690,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &935798613
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935798610}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &935798614
 Transform:
   m_ObjectHideFlags: 0
@@ -5645,7 +5618,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1196171953}
-  - component: {fileID: 1196171952}
   - component: {fileID: 1196171951}
   - component: {fileID: 1196171950}
   m_Layer: 0
@@ -5718,14 +5690,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1196171952
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196171949}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1196171953
 Transform:
   m_ObjectHideFlags: 0
@@ -6018,7 +5982,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1225436908}
-  - component: {fileID: 1225436907}
   - component: {fileID: 1225436906}
   - component: {fileID: 1225436905}
   - component: {fileID: 1225436909}
@@ -6092,14 +6055,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1225436907
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1225436904}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1225436908
 Transform:
   m_ObjectHideFlags: 0
@@ -8332,7 +8287,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1700717402}
-  - component: {fileID: 1700717401}
   - component: {fileID: 1700717400}
   - component: {fileID: 1700717399}
   m_Layer: 0
@@ -8405,14 +8359,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1700717401
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1700717398}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1700717402
 Transform:
   m_ObjectHideFlags: 0
@@ -8646,7 +8592,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1705506241}
-  - component: {fileID: 1705506240}
   - component: {fileID: 1705506239}
   - component: {fileID: 1705506238}
   m_Layer: 0
@@ -8719,14 +8664,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1705506240
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705506237}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1705506241
 Transform:
   m_ObjectHideFlags: 0
@@ -9371,7 +9308,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1852067811}
-  - component: {fileID: 1852067810}
   - component: {fileID: 1852067809}
   - component: {fileID: 1852067808}
   - component: {fileID: 1852067812}
@@ -9445,14 +9381,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1852067810
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1852067807}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1852067811
 Transform:
   m_ObjectHideFlags: 0
@@ -9870,7 +9798,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1975103477}
-  - component: {fileID: 1975103476}
   - component: {fileID: 1975103475}
   - component: {fileID: 1975103474}
   m_Layer: 0
@@ -9943,14 +9870,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1975103476
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975103473}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1975103477
 Transform:
   m_ObjectHideFlags: 0
@@ -9975,7 +9894,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1994610950}
-  - component: {fileID: 1994610949}
   - component: {fileID: 1994610948}
   - component: {fileID: 1994610947}
   - component: {fileID: 1994610951}
@@ -10049,14 +9967,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1994610949
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994610946}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1994610950
 Transform:
   m_ObjectHideFlags: 0
@@ -10523,7 +10433,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2085641330}
-  - component: {fileID: 2085641329}
   - component: {fileID: 2085641328}
   - component: {fileID: 2085641327}
   m_Layer: 0
@@ -10596,14 +10505,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2085641329
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085641326}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &2085641330
 Transform:
   m_ObjectHideFlags: 0
@@ -10628,7 +10529,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2092057882}
-  - component: {fileID: 2092057881}
   - component: {fileID: 2092057880}
   - component: {fileID: 2092057879}
   - component: {fileID: 2092057883}
@@ -10702,14 +10602,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2092057881
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092057878}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &2092057882
 Transform:
   m_ObjectHideFlags: 0
@@ -10956,3 +10848,5 @@ SceneRoots:
   - {fileID: 317577332}
   - {fileID: 1579599336}
   - {fileID: 422430727}
+  - {fileID: 153705394}
+  - {fileID: 168850198}
