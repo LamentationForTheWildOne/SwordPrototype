@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         }
         pos = ((damage * scaling) * direction);
         transform.position = new Vector2(transform.position.x + pos, transform.position.y);
-        p1.transform.position = new Vector2(transform.position.x - 3, p1.transform.position.y);
-        p2.transform.position = new Vector2(transform.position.x + 3, p2.transform.position.y);
+        p1.transform.position = new Vector2(transform.position.x - 2.5f, p1.transform.position.y);
+        p2.transform.position = new Vector2(transform.position.x + 2.5f, p2.transform.position.y);
     }
 
     public void NewRound() 
