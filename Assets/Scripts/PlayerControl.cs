@@ -47,7 +47,7 @@ public class PlayerControl : MonoBehaviour
     public bool tc = false;
     public bool an = false;
     public bool parrySkill = false;
-    int baseDamage = 10;
+    public int baseDamage = 10;
 
     // Variable holding which sword/shield the player has raised
     public GameObject active;
@@ -399,9 +399,18 @@ public class PlayerControl : MonoBehaviour
 
     public void Knockback() 
     {
+        gameManager.Cache();
+        if (playerCount == 1)
+        {
+            gameManager.p1follow = true;
+        }
+        else 
+        {
+            gameManager.p2follow = true;
+        }
         counter = 0.0f;
         startPos = transform.position;
-        endPos = new Vector2(gameManager.transform.position.x + ((opponent.GetComponent<PlayerControl>().baseDamage * gameManager.scaling) * direction), gameManager.transform.position.y - 0.4f);
+        endPos = new Vector2(gameManager.transform.position.x + ((opponent.GetComponent<PlayerControl>().baseDamage * gameManager.scaling) * direction), -0.4f);
         midPos = startPos + (endPos - startPos) / 2 + Vector3.up * 5.0f;
     }
 

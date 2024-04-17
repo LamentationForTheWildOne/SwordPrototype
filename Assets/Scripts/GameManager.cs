@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public int p1head;
     public int p1body;
     public int p1legs;
+    public Vector2 startPos;
 
     public int p2head;
     public int p2body;
@@ -45,6 +46,9 @@ public class GameManager : MonoBehaviour
     private AbilityList p1Abilities;
     private AbilityList p2Abilities;
 
+
+    public bool p1follow = false;
+    public bool p2follow = false;
 
 
 
@@ -60,6 +64,16 @@ public class GameManager : MonoBehaviour
 
     public void Reposition(int playernum, int damage) 
     {
+        if (p1follow)
+        {
+            transform.position = startPos;
+            p1follow = false;
+        }
+        if (p2follow)
+        {
+            transform.position = startPos;
+            p2follow = false;
+        }  
         if (playernum == 1)
         {
             direction = 1;
@@ -73,6 +87,8 @@ public class GameManager : MonoBehaviour
         p1.transform.position = new Vector2(transform.position.x - 2.5f, p1.transform.position.y);
         p2.transform.position = new Vector2(transform.position.x + 2.5f, p2.transform.position.y);
     }
+
+
 
     public void NewRound() 
     {
@@ -309,6 +325,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void Cache() {
+        startPos = transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -330,6 +350,14 @@ public class GameManager : MonoBehaviour
                 paused = false;
                 SkillMenu();
             }
+        }
+
+        if (p1follow == true) {
+            transform.position = new Vector2(p1control.transform.position.x, p1control.transform.position.y);
+        }
+        if (p2follow == true)
+        {
+            transform.position = new Vector2(p2control.transform.position.x, p2control.transform.position.y);
         }
     }
     public void SkillMenu()
