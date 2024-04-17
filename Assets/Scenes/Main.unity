@@ -1931,7 +1931,7 @@ MonoBehaviour:
   direction: 0
   p1: {fileID: 291678703}
   p2: {fileID: 865475061}
-  skills: {fileID: 0}
+  skills: {fileID: 1292736900}
   p1control: {fileID: 291678708}
   p2control: {fileID: 865475062}
   textDisplay: {fileID: 2404899}
