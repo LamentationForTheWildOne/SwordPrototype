@@ -10,7 +10,7 @@ public class TextDisplay : MonoBehaviour
     public PlayerControl Player1;
     public PlayerControl Player2;
     public GameManager gameManager;
-    public Image timerBar;
+
 
     //Text boxes
     public TMP_Text RoundAndTimerDisplay;
@@ -62,7 +62,7 @@ public class TextDisplay : MonoBehaviour
 
         
         UpdateRoundTimer();
-        timerBar.fillAmount = RoundCountdown/MaxRoundTimer;
+       
         //UpdateDisplay();
         if (BlockTextVisible)
         {
