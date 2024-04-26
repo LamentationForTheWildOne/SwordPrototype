@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TextDisplay : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class TextDisplay : MonoBehaviour
     public PlayerControl Player1;
     public PlayerControl Player2;
     public GameManager gameManager;
+    public Image timerBar;
 
     //Text boxes
     public TMP_Text RoundAndTimerDisplay;
@@ -50,13 +52,17 @@ public class TextDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         ResetDisplays();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        
         UpdateRoundTimer();
+        timerBar.fillAmount = RoundCountdown/MaxRoundTimer;
         //UpdateDisplay();
         if (BlockTextVisible)
         {
@@ -101,9 +107,12 @@ public class TextDisplay : MonoBehaviour
         if (Counting)
         {
             RoundCountdown -= Time.deltaTime;
+           
 
             if (RoundCountdown <= 0)
             {
+              
+             
                 RoundTimer -= 1;
                 UpdateDisplay();
                 RoundCountdown = 1;
