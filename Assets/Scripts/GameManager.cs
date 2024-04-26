@@ -89,7 +89,9 @@ public class GameManager : MonoBehaviour
         p2.transform.position = new Vector2(transform.position.x + 2.5f, p2.transform.position.y);
     }
 
-
+    public void VoidShake() {
+        Camera.main.GetComponent<ScreenShake>().StartShake();
+    }
 
     public void NewRound() 
     {

@@ -493,6 +493,7 @@ public class PlayerControl : MonoBehaviour
             {
                 StartCoroutine(Furystun());
             }
+            gameManager.VoidShake();    
         }
         else if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().parry || height == 1 && opponent.GetComponent<PlayerControl>().tower && opponent.GetComponent<PlayerControl>().parry) 
         {
