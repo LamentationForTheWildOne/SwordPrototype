@@ -101,8 +101,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 165
-        width: 48
+        y: 198
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -121,9 +121,9 @@ TextureImporter:
       name: midThrust1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 165
-        width: 48
+        x: 64
+        y: 198
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -142,9 +142,9 @@ TextureImporter:
       name: lowThrust1
       rect:
         serializedVersion: 2
-        x: 96
-        y: 165
-        width: 48
+        x: 128
+        y: 198
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -164,8 +164,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 132
-        width: 48
+        y: 165
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -184,9 +184,9 @@ TextureImporter:
       name: midThrust2
       rect:
         serializedVersion: 2
-        x: 48
-        y: 132
-        width: 48
+        x: 64
+        y: 165
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -205,9 +205,9 @@ TextureImporter:
       name: lowThrust2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 132
-        width: 48
+        x: 128
+        y: 165
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -223,12 +223,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: highThrust3
+      name: highThrust4
       rect:
         serializedVersion: 2
         x: 0
         y: 99
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -244,12 +244,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: midThrust3
+      name: midThrust4
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 99
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -265,12 +265,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lowThrust3
+      name: lowThrust4
       rect:
         serializedVersion: 2
-        x: 96
+        x: 128
         y: 99
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -291,7 +291,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 66
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -310,9 +310,9 @@ TextureImporter:
       name: midBlock
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 66
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -331,9 +331,9 @@ TextureImporter:
       name: lowBlock
       rect:
         serializedVersion: 2
-        x: 96
+        x: 128
         y: 66
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -354,7 +354,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 33
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -373,9 +373,9 @@ TextureImporter:
       name: midBlockActive
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 33
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -394,9 +394,9 @@ TextureImporter:
       name: lowBlockActive
       rect:
         serializedVersion: 2
-        x: 96
+        x: 128
         y: 33
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -417,7 +417,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -436,9 +436,9 @@ TextureImporter:
       name: midBlockDamage
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 0
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -457,9 +457,9 @@ TextureImporter:
       name: lowBlockDamage
       rect:
         serializedVersion: 2
-        x: 96
+        x: 128
         y: 0
-        width: 48
+        width: 64
         height: 33
       alignment: 4
       pivot: {x: 0, y: 0.5}
@@ -470,6 +470,69 @@ TextureImporter:
       bones: []
       spriteID: f2927c809bee7ef47aed48a8847ee42c
       internalID: 2037545337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: highThrust3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 132
+        width: 64
+        height: 33
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32555291ba33d4f138fa5c85cf6f4876
+      internalID: 566139919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: midThrust3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 132
+        width: 64
+        height: 33
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 055860cd0b3594073b2ae988223a3c76
+      internalID: -788054827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lowThrust3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 132
+        width: 64
+        height: 33
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b69e12e5af7b445799657536e4a2ce98
+      internalID: -1816398554
       vertices: []
       indices: 
       edges: []
@@ -490,19 +553,22 @@ TextureImporter:
       highBlockDamage: 1003311096
       highThrust1: -1943690789
       highThrust2: 1310395691
-      highThrust3: -1554275304
+      highThrust3: 566139919
+      highThrust4: -1554275304
       lowBlock: -1907662018
       lowBlockActive: 1095851152
       lowBlockDamage: 2037545337
       lowThrust1: 1783569827
       lowThrust2: 1343013954
-      lowThrust3: -1916190584
+      lowThrust3: -1816398554
+      lowThrust4: -1916190584
       midBlock: 521966420
       midBlockActive: -1742534979
       midBlockDamage: 556028085
       midThrust1: 1257647957
       midThrust2: -1896352814
-      midThrust3: 63323121
+      midThrust3: -788054827
+      midThrust4: 63323121
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
