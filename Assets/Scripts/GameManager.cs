@@ -62,12 +62,16 @@ public class GameManager : MonoBehaviour
     public bool p2dead = false;
     private AbilityList p1Abilities;
     private AbilityList p2Abilities;
+    public GameObject restartButton;
+    public GameObject fadePanel;
 
 
     public bool p1follow = false;
     public bool p2follow = false;
     public float followSpeed;
 
+    private Renderer p1render;
+    private Renderer p2render;
 
 
     // Start is called before the first frame update
@@ -80,6 +84,9 @@ public class GameManager : MonoBehaviour
         p2Abilities = p2.GetComponent<AbilityList>();
         SoundPlayer1 = p1.GetComponent<AudioSource>();
         SoundPlayer2 = p2.GetComponent<AudioSource>();
+        p1render = p1.GetComponent<Renderer>();
+        p2render = p2.GetComponent<Renderer>();
+    
 
         //SoundPlayer1.clip = SFX[0];
         //SoundPlayer1.Play();
@@ -117,6 +124,10 @@ public class GameManager : MonoBehaviour
 
     public void NewRound() 
     {
+        if (p1control.attackInProgress || p2control.attackInProgress) {
+            Debug.Log("New round delayed due to ongoing attack");
+            return; 
+        }
 
         p1control.swordH.GetComponent<SwordMovement>().Return();
         p1control.swordM.GetComponent<SwordMovement>().Return();
@@ -126,13 +137,13 @@ public class GameManager : MonoBehaviour
         p2control.swordM.GetComponent<SwordMovement>().Return();
         p2control.swordL.GetComponent<SwordMovement>().Return();
         
-        if (transform.position.x <= -40)
+        if (transform.position.x <= -45)
         {
             p1control.state = Phase.GAMEOVER;
             p2control.state = Phase.GAMEOVER;
             textDisplay.RoundAndTimerDisplay.text = "P2 WINS!";
         }
-        else if (transform.position.x >= 40)
+        else if (transform.position.x >= 45)
         {
             p1control.state = Phase.GAMEOVER;
             p2control.state = Phase.GAMEOVER;
@@ -357,6 +368,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (p1control.state == Phase.GAMEOVER || p2control.state == Phase.GAMEOVER) {
+            p1render.sortingOrder = 3;
+            p2render.sortingOrder = 3;
+
+            restartButton.SetActive(true);
+            fadePanel.SetActive(true);
+        }
 
         if (Input.GetKeyDown(KeyCode.R)) {
             SceneManager.LoadScene("Main");
@@ -371,6 +389,7 @@ public class GameManager : MonoBehaviour
                 SkillMenu();
             } else if (paused) 
             {
+                
                 StartCoroutine(Unpause());
                 paused = false;
                 SkillMenu();
@@ -406,5 +425,8 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(3f);
         Time.timeScale = 1;
+    }
+    public void Restart(){
+        SceneManager.LoadScene("Main");
     }
 }

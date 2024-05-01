@@ -13,17 +13,17 @@ public class SceneManagerScript : MonoBehaviour
     {
         if (Instance == null)
         {
-            // This instance becomes the single global instance
+          
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Prevent destruction on load
+            DontDestroyOnLoad(gameObject); 
         }
         else if (Instance != this)
         {
-            // Destroy this instance because another instance already exists
+
             Destroy(gameObject);
         }
     }
-    // Call this method for OnClick event
+
     public void LoadNextScene(string sceneName)
     {
         StartCoroutine(TransitionToScene(sceneName));
@@ -41,10 +41,10 @@ public class SceneManagerScript : MonoBehaviour
         
         yield return new WaitForSeconds(transitionTime);
         
-        // Load the next scene
+       
         SceneManager.LoadScene(sceneName);
         
-        // Optionally, fade in from the next scene (this requires the fade panel to be persistent across scenes or recreated in the next scene)
+       
         fadeAnimator.SetTrigger("Fadein");
         yield return new WaitForSeconds(transitionTime);
         

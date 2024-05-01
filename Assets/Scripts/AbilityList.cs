@@ -14,6 +14,13 @@ public class AbilityList : MonoBehaviour
 
     void Start()
     {
+        fury = false;
+        charge = false;
+        imp = false;
+        tower = false;
+        tc = false;
+        an = false;
+        p = false;
         offensive = "No Skill";
         defensive = "No Skill";
         UpdateSkills();  
@@ -79,6 +86,7 @@ public class AbilityList : MonoBehaviour
     {
         oSkill = dSkill = cSkill = -1;  //resetting the cool down for testing.
         oCool = dCool = 0;
+   
 
         if (fury)
         {

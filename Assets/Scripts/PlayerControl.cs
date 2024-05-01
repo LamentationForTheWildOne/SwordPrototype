@@ -18,6 +18,8 @@ public class PlayerControl : MonoBehaviour
     public GameObject opponent;
     public GameManager gameManager;
     public AbilityList abilityList;
+    public bool attackInProgress = false;
+
 
     public int offcool;
     public int defcool;
@@ -358,6 +360,7 @@ public class PlayerControl : MonoBehaviour
 
     public void Switch()
     {
+        if (attackInProgress) return; 
         active.SetActive(false);
         if (state == Phase.DEFENDING)
         {
@@ -453,6 +456,7 @@ public class PlayerControl : MonoBehaviour
         // MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
         //Color originalColor = meshRenderer.material.color;
         // meshRenderer.material.color = Color.red;
+        attackInProgress = true;       
         if (!an && !tc)
         {
             active.GetComponent<SwordMovement>().Thrust();
@@ -528,6 +532,8 @@ public class PlayerControl : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.1f); 
+        attackInProgress = false;
+
 
         //meshRenderer.material.color = originalColor;
     }
@@ -605,11 +611,16 @@ public class PlayerControl : MonoBehaviour
     }
 
     IEnumerator Preround(Phase next) {
+        while (attackInProgress) {
+            yield return null; 
+        }
+
         baseDamage = 10;
         moveto = next;
         yield return new WaitForSeconds(2);
         state = next;
     }
+
 
     IEnumerator Fill() 
     {
