@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
     public void NewRound() 
     {
         if (p1control.attackInProgress || p2control.attackInProgress) {
-            Debug.Log("New round delayed due to ongoing attack");
+            Debug.Log("Delayed");
             return; 
         }
 
