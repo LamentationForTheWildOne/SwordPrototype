@@ -33,18 +33,6 @@ public class GameManager : MonoBehaviour
     public AudioSource SoundPlayer1;
     public AudioSource SoundPlayer2;
     public List<AudioClip> SFX;
-    //SFX Guide:
-    //(Note: Audio clips not final; require editing)
-    //SFX[0] = Attack
-    //SFX[1] = Feint
-    //SFX[2] = Hit
-    //SFX[3] = Block
-    //SFX[4] = Round Start
-    //SFX[5] = Round Timer
-    //SFX[6] = Time Out (Not implemented)
-    //SFX[7] = Fatal Hit (Not implemented)
-    //SFX[8] = Ring Out (Not implemented)
-
 
 
     public int MaxRoundTime;
@@ -103,9 +91,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         paused = true;
         PauseButtonClick = false;
-
-        //SoundPlayer1.clip = SFX[0];
-        //SoundPlayer1.Play();
     }
 
     public void Reposition(int playernum, int damage) 
