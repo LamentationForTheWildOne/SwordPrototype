@@ -152,11 +152,15 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+        if (gameManager.paused) 
+            return;
+
         if (!acting && state != Phase.PREROUND)
         {
             HandleMovementInput();
 
-            // Action and Feint logic
+           
             if (Input.GetButtonDown("Action" + playerCount) | Input.GetKeyDown(Action))
             {
                 acting = true;
@@ -185,7 +189,6 @@ public class PlayerControl : MonoBehaviour
                     parry = true;
                     StartCoroutine(ParryCount());
                 }
-                
             }
         }
         if (state == Phase.PREROUND) {
@@ -205,10 +208,7 @@ public class PlayerControl : MonoBehaviour
                             Debug.Log("Charge");
                             baseDamage = 15;
                             break;
-
-                    
                     }
-                
                 }
             }
             else if (moveto == Phase.DEFENDING) 
@@ -218,19 +218,15 @@ public class PlayerControl : MonoBehaviour
                     defcool = abilityList.dCool;
                     switch (abilityList.dSkill)
                     {
-
                         case 0:
                             gameManager.Impatient();
                             break;
                         case 1:
                             tower = true;
                             break;
-
                     }
                 }
-
             }
-        
         }
 
         if (counter < 1.0f) {
@@ -241,6 +237,7 @@ public class PlayerControl : MonoBehaviour
             transform.position = Vector3.Lerp(m1, m2, counter);
         }
     }
+
 
     void HandleMovementInput()
     {

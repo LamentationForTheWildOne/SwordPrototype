@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
 
@@ -10,9 +11,11 @@ public class GameManager : MonoBehaviour
     public int scaling;
     public int round;
     public int direction;
+    public GameObject ControlGuide;
     public GameObject p1;
     public GameObject p2;
     public GameObject skills;
+    public GameObject PauseButton;
     public PlayerControl p1control;
     public PlayerControl p2control;
     public TextDisplay textDisplay;
@@ -26,6 +29,22 @@ public class GameManager : MonoBehaviour
     public List<Sprite> HeadSprites;
     public List<Sprite> ChestSprites;
     public List<Sprite> TorsoSprites;
+
+    public AudioSource SoundPlayer1;
+    public AudioSource SoundPlayer2;
+    public List<AudioClip> SFX;
+    //SFX Guide:
+    //(Note: Audio clips not final; require editing)
+    //SFX[0] = Attack
+    //SFX[1] = Feint
+    //SFX[2] = Hit
+    //SFX[3] = Block
+    //SFX[4] = Round Start
+    //SFX[5] = Round Timer
+    //SFX[6] = Time Out (Not implemented)
+    //SFX[7] = Fatal Hit (Not implemented)
+    //SFX[8] = Ring Out (Not implemented)
+
 
 
     public int MaxRoundTime;
@@ -47,7 +66,10 @@ public class GameManager : MonoBehaviour
     private AbilityList p1Abilities;
     private AbilityList p2Abilities;
     public GameObject restartButton;
+    public GameObject pauseButton;
     public GameObject fadePanel;
+    public GameObject HideUI1;
+    public GameObject HideUI2;
 
 
     public bool p1follow = false;
@@ -56,7 +78,12 @@ public class GameManager : MonoBehaviour
 
     private Renderer p1render;
     private Renderer p2render;
+    private bool PauseButtonClick = false;
+    private bool firstOpen = true;
+    
 
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -66,8 +93,19 @@ public class GameManager : MonoBehaviour
         p2control = p2.GetComponent<PlayerControl>();
         p1Abilities = p1.GetComponent<AbilityList>();
         p2Abilities = p2.GetComponent<AbilityList>();
+        SoundPlayer1 = p1.GetComponent<AudioSource>();
+        SoundPlayer2 = p2.GetComponent<AudioSource>();
         p1render = p1.GetComponent<Renderer>();
         p2render = p2.GetComponent<Renderer>();
+
+        PauseButton.SetActive(false);
+        skills.SetActive(true);
+        Time.timeScale = 0;
+        paused = true;
+        PauseButtonClick = false;
+
+        //SoundPlayer1.clip = SFX[0];
+        //SoundPlayer1.Play();
     }
 
     public void Reposition(int playernum, int damage) 
@@ -279,7 +317,7 @@ public class GameManager : MonoBehaviour
             case 2:
                 p1ldisplay.sprite = TorsoSprites[2];
                 break;
-            case 3:
+            case 3: 
                 p1dead = true;
                 p1ldisplay.sprite = TorsoSprites[3];
                 break;
@@ -349,7 +387,9 @@ public class GameManager : MonoBehaviour
         if (p1control.state == Phase.GAMEOVER || p2control.state == Phase.GAMEOVER) {
             p1render.sortingOrder = 3;
             p2render.sortingOrder = 3;
-
+            pauseButton.SetActive(false);
+            HideUI1.SetActive(false);
+            HideUI2.SetActive(false);
             restartButton.SetActive(true);
             fadePanel.SetActive(true);
         }
@@ -358,19 +398,33 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Main");
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) || PauseButtonClick) // pause button active
         {
             if (!paused)
             {
+                if(firstOpen)
+                {
+                    ControlGuide.SetActive(true);
+                    StartCoroutine(Countdown());
+                    firstOpen = false;
+                }
                 paused = true;
                 Time.timeScale = 0;
                 SkillMenu();
+                PauseButtonClick = false;
             } else if (paused) 
             {
-                
+                if (firstOpen)
+                {
+                    ControlGuide.SetActive(true);
+                    StartCoroutine(Countdown());
+                    firstOpen = false;
+                }
+
                 StartCoroutine(Unpause());
                 paused = false;
                 SkillMenu();
+                PauseButtonClick = false;
             }
         }
 
@@ -386,15 +440,45 @@ public class GameManager : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime * followSpeed);
         
     }
+
+
+    IEnumerator Countdown()
+    {
+        yield return new WaitForSeconds(5f);
+        ControlGuide.SetActive(false);
+    }
+
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
     public void SkillMenu()
     {
         if(paused == true )
         {
            skills.SetActive(true);
+           PauseButton.SetActive(false);
         }
         else
         {
             skills.SetActive(false);
+            PauseButton.SetActive(true);
+        }
+
+    }
+
+
+    public void PauseTheButton()
+    {
+        
+        if (PauseButtonClick == false)
+        {
+            PauseButtonClick = true;          
+        }
+        else
+        {
+            PauseButtonClick = false;    
         }
 
     }
