@@ -24,6 +24,23 @@ public class PlayerControl : MonoBehaviour
     public int offcool;
     public int defcool;
 
+    //Audio Stuff
+    public AudioSource SoundPlayer;
+    public List<AudioClip> SFX;
+    //SFX Guide:
+    //(Note: Audio clips not final; require editing)
+    //SFX[0] = Attack
+    //SFX[1] = Feint
+    //SFX[2] = Hit
+    //SFX[3] = Block
+    //SFX[4] = Round Start (Not implemented)
+    //SFX[5] = Round Timer (Not implemented)
+    //SFX[6] = Time Out (Not implemented)
+    //SFX[7] = Fatal Hit (Not implemented)
+    //SFX[8] = Ring Out (Not implemented)
+
+
+
     // Game objects for various sword/shield heights
     public GameObject swordH;
     public GameObject swordM;
@@ -104,6 +121,9 @@ public class PlayerControl : MonoBehaviour
         height = 1;
 
         StartCoroutine(Fill());
+
+
+        SoundPlayer = GetComponent<AudioSource>();
     }
 
     public void Ability() 
@@ -456,7 +476,12 @@ public class PlayerControl : MonoBehaviour
         // MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
         //Color originalColor = meshRenderer.material.color;
         // meshRenderer.material.color = Color.red;
-        attackInProgress = true;       
+        attackInProgress = true;
+
+        //Play attack sound
+        SoundPlayer.clip = SFX[0];
+        SoundPlayer.Play();
+
         if (!an && !tc)
         {
             active.GetComponent<SwordMovement>().Thrust();
@@ -479,6 +504,11 @@ public class PlayerControl : MonoBehaviour
         if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().blocking || height == 1 && opponent.GetComponent<PlayerControl>().tower && opponent.GetComponent<PlayerControl>().blocking)
         {
             Debug.Log("block");
+
+            //Play block sound
+            SoundPlayer.clip = SFX[3];
+            SoundPlayer.Play();
+
             if (!fury)
             {
                 if (!charge)
@@ -502,6 +532,11 @@ public class PlayerControl : MonoBehaviour
         else if (opponent.GetComponent<PlayerControl>().height == height && opponent.GetComponent<PlayerControl>().parry || height == 1 && opponent.GetComponent<PlayerControl>().tower && opponent.GetComponent<PlayerControl>().parry) 
         {
             Debug.Log("parry");
+
+            //Play block sound
+            SoundPlayer.clip = SFX[3];
+            SoundPlayer.Play();
+
             TheTextDisplay.StrikeBlocked(first);
             StartCoroutine(Hitstun());
             StartCoroutine(ParryRepo());
@@ -509,6 +544,10 @@ public class PlayerControl : MonoBehaviour
         } 
         else
         {
+            //Play hit sound
+            SoundPlayer.clip = SFX[2];
+            SoundPlayer.Play();
+
             opponent.GetComponent<PlayerControl>().animator.SetBool("Damaged", true);
             Debug.Log("hit");
             TheTextDisplay.StrikeLanded(first);

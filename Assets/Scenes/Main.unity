@@ -2047,6 +2047,12 @@ MonoBehaviour:
   attackInProgress: 0
   offcool: 0
   defcool: 0
+  SoundPlayer: {fileID: 0}
+  SFX:
+  - {fileID: 8300000, guid: 86b0981716ce74f38b00a14451bcd93e, type: 3}
+  - {fileID: 8300000, guid: dc3580eaf773648339c7d393419a9117, type: 3}
+  - {fileID: 8300000, guid: 158631b62e0984e07b7652f86a34570b, type: 3}
+  - {fileID: 8300000, guid: fb65a275bbfed434c93a6bf09507c218, type: 3}
   swordH: {fileID: 2092057878}
   swordM: {fileID: 1852067807}
   swordL: {fileID: 875843321}
@@ -2741,17 +2747,6 @@ MonoBehaviour:
   - {fileID: -556736916, guid: 23015b168c6c545e4a4ade0f74a95fa3, type: 3}
   - {fileID: 753003012, guid: 23015b168c6c545e4a4ade0f74a95fa3, type: 3}
   - {fileID: 322083471, guid: 23015b168c6c545e4a4ade0f74a95fa3, type: 3}
-  SoundPlayer1: {fileID: 291678712}
-  SoundPlayer2: {fileID: 865475071}
-  SFX:
-  - {fileID: 8300000, guid: 91968e557e992455d9e792f0f24bafae, type: 3}
-  - {fileID: 8300000, guid: f762a5cb39f9b4cfcac181b9471a091e, type: 3}
-  - {fileID: 8300000, guid: eb6c9c8aaff1e4635b3d6735d9fe4191, type: 3}
-  - {fileID: 8300000, guid: a2b2661d0f71047c7b91e4d3b04058f3, type: 3}
-  - {fileID: 8300000, guid: fcdfba94c7ee5467db5877c6eaec3a66, type: 3}
-  - {fileID: 8300000, guid: 1254188f68c3c4643a3b71b18a34f9c1, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
   MaxRoundTime: 10
   NewRoundTime: 0
   paused: 0
@@ -5897,6 +5892,12 @@ MonoBehaviour:
   attackInProgress: 0
   offcool: 0
   defcool: 0
+  SoundPlayer: {fileID: 0}
+  SFX:
+  - {fileID: 8300000, guid: 86b0981716ce74f38b00a14451bcd93e, type: 3}
+  - {fileID: 8300000, guid: dc3580eaf773648339c7d393419a9117, type: 3}
+  - {fileID: 8300000, guid: 158631b62e0984e07b7652f86a34570b, type: 3}
+  - {fileID: 8300000, guid: fb65a275bbfed434c93a6bf09507c218, type: 3}
   swordH: {fileID: 1225436904}
   swordM: {fileID: 935798610}
   swordL: {fileID: 1994610946}

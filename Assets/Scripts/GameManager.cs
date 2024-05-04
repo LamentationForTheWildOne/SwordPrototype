@@ -27,22 +27,6 @@ public class GameManager : MonoBehaviour
     public List<Sprite> ChestSprites;
     public List<Sprite> TorsoSprites;
 
-    public AudioSource SoundPlayer1;
-    public AudioSource SoundPlayer2;
-    public List<AudioClip> SFX;
-    //SFX Guide:
-    //(Note: Audio clips not final; require editing)
-    //SFX[0] = Attack
-    //SFX[1] = Feint
-    //SFX[2] = Hit
-    //SFX[3] = Block
-    //SFX[4] = Round Start
-    //SFX[5] = Round Timer
-    //SFX[6] = Time Out (Not implemented)
-    //SFX[7] = Fatal Hit (Not implemented)
-    //SFX[8] = Ring Out (Not implemented)
-
-
 
     public int MaxRoundTime;
     public int NewRoundTime;
@@ -82,14 +66,8 @@ public class GameManager : MonoBehaviour
         p2control = p2.GetComponent<PlayerControl>();
         p1Abilities = p1.GetComponent<AbilityList>();
         p2Abilities = p2.GetComponent<AbilityList>();
-        SoundPlayer1 = p1.GetComponent<AudioSource>();
-        SoundPlayer2 = p2.GetComponent<AudioSource>();
         p1render = p1.GetComponent<Renderer>();
         p2render = p2.GetComponent<Renderer>();
-    
-
-        //SoundPlayer1.clip = SFX[0];
-        //SoundPlayer1.Play();
     }
 
     public void Reposition(int playernum, int damage) 
