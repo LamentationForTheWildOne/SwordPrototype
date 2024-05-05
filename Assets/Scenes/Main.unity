@@ -2749,9 +2749,10 @@ MonoBehaviour:
   - {fileID: -556736916, guid: 23015b168c6c545e4a4ade0f74a95fa3, type: 3}
   - {fileID: 753003012, guid: 23015b168c6c545e4a4ade0f74a95fa3, type: 3}
   - {fileID: 322083471, guid: 23015b168c6c545e4a4ade0f74a95fa3, type: 3}
-  SoundPlayer1: {fileID: 0}
-  SoundPlayer2: {fileID: 0}
-  SFX: []
+  MusicPlayer: {fileID: 0}
+  Songs:
+  - {fileID: 8300000, guid: 86ed64df7f3764b6cbabd04a658f9b57, type: 3}
+  - {fileID: 8300000, guid: 1793a641a43d949e38d10b71ea497635, type: 3}
   MaxRoundTime: 10
   NewRoundTime: 0
   paused: 0
@@ -2784,7 +2785,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0

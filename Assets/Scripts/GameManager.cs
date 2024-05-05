@@ -30,9 +30,8 @@ public class GameManager : MonoBehaviour
     public List<Sprite> ChestSprites;
     public List<Sprite> TorsoSprites;
 
-    public AudioSource SoundPlayer1;
-    public AudioSource SoundPlayer2;
-    public List<AudioClip> SFX;
+    public AudioSource MusicPlayer;
+    public List<AudioClip> Songs;
 
 
     public int MaxRoundTime;
@@ -81,16 +80,20 @@ public class GameManager : MonoBehaviour
         p2control = p2.GetComponent<PlayerControl>();
         p1Abilities = p1.GetComponent<AbilityList>();
         p2Abilities = p2.GetComponent<AbilityList>();
-        SoundPlayer1 = p1.GetComponent<AudioSource>();
-        SoundPlayer2 = p2.GetComponent<AudioSource>();
+        MusicPlayer = GetComponent<AudioSource>();
         p1render = p1.GetComponent<Renderer>();
         p2render = p2.GetComponent<Renderer>();
 
-        PauseButton.SetActive(false);
+        //PauseButton.SetActive(false);
         skills.SetActive(true);
         Time.timeScale = 0;
         paused = true;
         PauseButtonClick = false;
+
+        int newSong = Random.Range(0, Songs.Count);
+        Debug.Log("New Song = " + newSong);
+        MusicPlayer.clip = Songs[newSong];
+        MusicPlayer.Play();
     }
 
     public void Reposition(int playernum, int damage) 
@@ -129,6 +132,15 @@ public class GameManager : MonoBehaviour
             Debug.Log("Delayed");
             return; 
         }
+
+        //if (textDisplay.RoundAndTimerDisplay.text == "P1 WINS" || textDisplay.RoundAndTimerDisplay.text == "P2 WINS")
+        //{
+        //    int newSong = Random.Range(0, Songs.Count - 1);
+        //    Debug.Log("New Song = " + newSong);
+        //    MusicPlayer.clip = Songs[newSong];
+        //    MusicPlayer.Play();
+        //}
+
 
         p1control.swordH.GetComponent<SwordMovement>().Return();
         p1control.swordM.GetComponent<SwordMovement>().Return();
@@ -372,7 +384,7 @@ public class GameManager : MonoBehaviour
         if (p1control.state == Phase.GAMEOVER || p2control.state == Phase.GAMEOVER) {
             p1render.sortingOrder = 3;
             p2render.sortingOrder = 3;
-            pauseButton.SetActive(false);
+            //pauseButton.SetActive(false);
             HideUI1.SetActive(false);
             HideUI2.SetActive(false);
             restartButton.SetActive(true);
