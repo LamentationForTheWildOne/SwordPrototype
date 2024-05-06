@@ -152,16 +152,16 @@ public class GameManager : MonoBehaviour
         p2control.swordM.GetComponent<SwordMovement>().Return();
         p2control.swordL.GetComponent<SwordMovement>().Return();
         
-        if (transform.position.x <= -45)
+        if (transform.position.x <= -35)
         {
-            p1control.state = Phase.GAMEOVER;
+            p1control.state = Phase.FALL;
             p2control.state = Phase.GAMEOVER;
             textDisplay.RoundAndTimerDisplay.text = "P2 WINS!";
         }
-        else if (transform.position.x >= 45)
+        else if (transform.position.x >= 35)
         {
             p1control.state = Phase.GAMEOVER;
-            p2control.state = Phase.GAMEOVER;
+            p2control.state = Phase.FALL;
             textDisplay.RoundAndTimerDisplay.text = "P1 WINS";
         }
         else
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
                 textDisplay.P2Def.text = p2Abilities.defensive +": " + p2control.defcool;
 
                 textDisplay.Advantage.text = "" + transform.position.x;
-                textDisplay.RoundAndTimerDisplay.text = "PREROUND";
+                textDisplay.RoundAndTimerDisplay.text = "USE SKILLS";
                 textDisplay.Info.SetActive(true);
                 NewRoundTime = MaxRoundTime;
                 StartCoroutine(GMPreround());
@@ -285,9 +285,14 @@ public class GameManager : MonoBehaviour
                 p1hdisplay.sprite = HeadSprites[2];
                 break;
             case 3:
-                p1dead = true;
                 p1hdisplay.sprite = HeadSprites[3];
                 break;
+                
+            case 4:
+                p1dead = true;
+                p1hdisplay.sprite = HeadSprites[4];
+                break;
+
         }
         switch (p1body)
         {
@@ -301,8 +306,11 @@ public class GameManager : MonoBehaviour
                 p1bdisplay.sprite = ChestSprites[2];
                 break;
             case 3:
-                p1dead = true;
                 p1bdisplay.sprite = ChestSprites[3];
+                break;
+            case 4:
+                p1dead = true;
+                p1bdisplay.sprite = ChestSprites[4];
                 break;
         }
         switch (p1legs)
@@ -316,9 +324,12 @@ public class GameManager : MonoBehaviour
             case 2:
                 p1ldisplay.sprite = TorsoSprites[2];
                 break;
-            case 3: 
-                p1dead = true;
+            case 3:
                 p1ldisplay.sprite = TorsoSprites[3];
+                break;
+            case 4: 
+                p1dead = true;
+                p1ldisplay.sprite = TorsoSprites[4];
                 break;
         }
 
@@ -333,9 +344,12 @@ public class GameManager : MonoBehaviour
             case 2:
                 p2hdisplay.sprite = HeadSprites[2];
                 break;
-            case 3:
-                p2dead = true;
+            case 3: 
                 p2hdisplay.sprite = HeadSprites[3];
+                break;
+            case 4:
+                p2dead = true;
+                p2hdisplay.sprite = HeadSprites[4];
                 break;
         }
         switch (p2body)
@@ -350,8 +364,11 @@ public class GameManager : MonoBehaviour
                 p2bdisplay.sprite = ChestSprites[2];
                 break;
             case 3:
+                p2bdisplay.sprite= ChestSprites[3];
+                break;
+            case 4:
                 p2dead = true;
-                p2bdisplay.sprite = ChestSprites[3];
+                p2bdisplay.sprite = ChestSprites[4];
                 break;
         }
         switch (p2legs)
@@ -366,8 +383,11 @@ public class GameManager : MonoBehaviour
                 p2ldisplay.sprite = TorsoSprites[2];
                 break;
             case 3:
+                p2ldisplay.sprite= TorsoSprites[3];
+                break;
+            case 4:
                 p2dead = true;
-                p2ldisplay.sprite = TorsoSprites[3];
+                p2ldisplay.sprite = TorsoSprites[4];
                 break;
         }
 
@@ -437,6 +457,16 @@ public class GameManager : MonoBehaviour
             targetPosition = new Vector2(p2control.transform.position.x, p2control.transform.position.y);
         }
         transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime * followSpeed);
+        if (transform.position.x < -35)
+        {
+
+            p1.transform.Translate(Vector3.down * Time.deltaTime * 4);
+        }
+        else if (transform.position.x > 35)
+        {
+
+            p2.transform.Translate(Vector3.down * Time.deltaTime * 4);
+        }
         
     }
 
@@ -484,7 +514,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Unpause() 
     {
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(0f);
         Time.timeScale = 1;
     }
     public void Restart(){

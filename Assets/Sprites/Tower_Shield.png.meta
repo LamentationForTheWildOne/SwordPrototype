@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b7d200ab686834b639638b211231cf8b
+guid: 842030a2ad29f408aa383005f4b39f25
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -81,7 +81,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Standalone
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -94,7 +94,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,127 +110,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Knight Hit Silver
+      name: Tower_Shield_0
       rect:
         serializedVersion: 2
         x: 0
         y: 33
         width: 64
         height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf0ca0e8320844b649a399dc0a714c5f
-      internalID: 171233515
+      spriteID: 9853383e603be42a98ab55faf113d7db
+      internalID: -6411431
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Knight Dying Silver
+      name: Tower_Shield_1
       rect:
         serializedVersion: 2
         x: 64
         y: 33
         width: 64
         height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 203334da78e794e7a823e903869ca2a3
-      internalID: -2003148609
+      spriteID: 6eded173b6426492da72976b5cd3c9f6
+      internalID: -88494855
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Knight Dead Silver
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 33
-        width: 64
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8498797eb9ed54b5a945976b673088d1
-      internalID: -1789237025
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Knight Hit Red
+      name: Tower_Shield_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 64
         height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1dafac9e68bde448c80f2f36fa8b41c9
-      internalID: -24460136
+      spriteID: bf95235a40295449db4a07b4208e1a66
+      internalID: -1107910696
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Knight Dying Red
+      name: Tower_Shield_3
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 64
         height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82ba3a21ee8044cab9806c61c6f9d597
-      internalID: -772414371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Knight Dead Red
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f4eb56af2a8204fffb662882ed58ed08
-      internalID: 442089140
+      spriteID: e4f4407b1215449199da562fa078dfc0
+      internalID: 1205294656
       vertices: []
       indices: 
       edges: []
@@ -246,12 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Knight Dead Red: 442089140
-      Knight Dead Silver: -1789237025
-      Knight Dying Red: -772414371
-      Knight Dying Silver: -2003148609
-      Knight Hit Red: -24460136
-      Knight Hit Silver: 171233515
+      Tower_Shield_0: -6411431
+      Tower_Shield_1: -88494855
+      Tower_Shield_2: -1107910696
+      Tower_Shield_3: 1205294656
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

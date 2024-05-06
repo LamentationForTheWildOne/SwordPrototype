@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
-public enum Phase { ATTACKING, PREROUND, DEFENDING, GAMEOVER }
+public enum Phase { ATTACKING, PREROUND, DEFENDING, GAMEOVER, FALL}
 
 public class PlayerControl : MonoBehaviour
 {
@@ -152,7 +152,13 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+       if (state == Phase.FALL)
+        {
+          
+            transform.Translate(Vector3.down * Time.deltaTime);
+            return; 
+        }
+
         if (gameManager.paused) 
             return;
 
@@ -172,7 +178,14 @@ public class PlayerControl : MonoBehaviour
                 else if (state == Phase.DEFENDING)
                 {
                     blocking = true;
-                    animator.SetBool("Blocking", true);
+                    if (tower == true){
+                        animator.SetBool("TowerAnimate", true);
+                    }
+                    else{
+                        animator.SetBool("Blocking", true);
+
+                    }
+
                     StartCoroutine(ShieldCount());
                 }
             }
@@ -182,12 +195,13 @@ public class PlayerControl : MonoBehaviour
                 acting = true;
                 if (state == Phase.ATTACKING)
                 {
+                    animator.SetInteger("AttackS", 1);
                     StartCoroutine(FeintCount());
                 }
                 else if (state == Phase.DEFENDING && parrySkill)
                 {
-                    parry = true;
-                    StartCoroutine(ParryCount());
+                    // parry = true;
+                    // StartCoroutine(ParryCount());
                 }
             }
         }
@@ -213,8 +227,10 @@ public class PlayerControl : MonoBehaviour
             }
             else if (moveto == Phase.DEFENDING) 
             {
+
                 if ((Input.GetButtonDown("Action" + playerCount) | Input.GetKeyDown(Action)) && defcool == 0)
                 {
+
                     defcool = abilityList.dCool;
                     switch (abilityList.dSkill)
                     {
@@ -223,6 +239,7 @@ public class PlayerControl : MonoBehaviour
                             break;
                         case 1:
                             tower = true;
+                            animator.SetBool("Towering", true);
                             break;
                     }
                 }
@@ -267,16 +284,18 @@ public class PlayerControl : MonoBehaviour
                 if (Input.GetKey(Up) | Input.GetAxisRaw(playerAxes) > 0)
                 {
                     SetTowerPositionUp(); // High position
-                    //animator.SetInteger("BlockHeight", -1);
+                    animator.SetInteger("TowerHeight", -1);
                 }
                 else if (Input.GetKey(Down) | Input.GetAxisRaw(playerAxes) < 0)
                 {
                     SetTowerPositionDown(); // Low position
-                    //animator.SetInteger("BlockHeight", 1);
+                    animator.SetInteger("TowerHeight", 0);
                 }
                 else
                 {
                     SetTowerPositionDown(); // Neutral/middle position
+                    animator.SetInteger("TowerHeight", 0);
+
 
                 }
             }
@@ -332,6 +351,8 @@ public class PlayerControl : MonoBehaviour
             active = shieldH;
             height = 2;
             active.SetActive(true);
+            animator.SetInteger("TowerHeight", -1);
+
         }
     }
 
@@ -343,6 +364,8 @@ public class PlayerControl : MonoBehaviour
             active = shieldL;
             height = 0;
             active.SetActive(true);
+            animator.SetInteger("TowerHeight", 0);
+
         }
 
     }
@@ -384,6 +407,7 @@ public class PlayerControl : MonoBehaviour
             if (tower) 
             {
                 tower = false;
+                animator.SetBool("Towering", false);
                 shieldM.SetActive(false);
             }
 
@@ -417,22 +441,68 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void Knockback() 
+ public void Knockback() 
+{
+
+    gameManager.Cache();
+
+Debug.Log("Player Count: " + playerCount);
+    if (playerCount == 1)
+    {
+
+        gameManager.p1follow = true;
+        Debug.Log("Player 1 initiating knockback.");
+    }
+    else 
+    {
+
+        gameManager.p2follow = true;
+        Debug.Log("Player 2 initiating knockback.");
+    }
+
+    counter = 0.0f;
+    startPos = transform.position;
+
+    endPos = new Vector2(gameManager.transform.position.x + ((opponent.GetComponent<PlayerControl>().baseDamage * gameManager.scaling) * direction), -0.4f);
+
+    midPos = startPos + (endPos - startPos) / 2 + Vector3.up * 5.0f;
+
+
+    opponent.GetComponent<PlayerControl>().KnockbackWithFollow();
+}
+
+
+    public void KnockbackWithFollow() 
     {
         gameManager.Cache();
+
         if (playerCount == 1)
         {
-            gameManager.p1follow = true;
+            gameManager.p2follow = true;
+            StartCoroutine(DelayedFollow(6)); 
         }
         else 
         {
-            gameManager.p2follow = true;
+            gameManager.p1follow = true;
+            StartCoroutine(DelayedFollow(-6)); 
         }
+    }
+
+    IEnumerator DelayedFollow(float offset)
+    {
+        yield return new WaitForSeconds(0.5f);
+
         counter = 0.0f;
         startPos = transform.position;
-        endPos = new Vector2(gameManager.transform.position.x + ((opponent.GetComponent<PlayerControl>().baseDamage * gameManager.scaling) * direction), -0.4f);
-        midPos = startPos + (endPos - startPos) / 2 + Vector3.up * 5.0f;
+        endPos = new Vector2(startPos.x + offset, startPos.y); 
+        midPos = startPos + (endPos - startPos) / 2;
+
+
     }
+
+
+
+
 
     public void ParryKnockback() 
     {
@@ -450,7 +520,15 @@ public class PlayerControl : MonoBehaviour
         meshRenderer.material.color = Color.blue;
         yield return new WaitForSeconds(0.5f);
         meshRenderer.material.color = originalColor;
-        animator.SetBool("Blocking", false);
+        if (tower == true){
+            animator.SetBool("TowerAnimate", false);
+
+        }
+        else{
+            animator.SetBool("Blocking", false);
+
+        }
+
         blocking = false;
         acting = false;
     }
