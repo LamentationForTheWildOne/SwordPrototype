@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
     private Renderer p2render;
     private bool PauseButtonClick = false;
     private bool firstOpen = true;
+
+
     
 
     
