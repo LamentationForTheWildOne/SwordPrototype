@@ -152,6 +152,9 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    // if (state == Phase.GAMEOVER){
+    //     animator.SetBool("Dead", true);
+    // }
        if (state == Phase.FALL)
         {
           
@@ -369,6 +372,7 @@ public class PlayerControl : MonoBehaviour
         }
 
     }
+    
 
     void ResetSwordPosition()
     {

@@ -156,12 +156,14 @@ public class GameManager : MonoBehaviour
         {
             p1control.state = Phase.FALL;
             p2control.state = Phase.GAMEOVER;
+            p1dead = true;
             textDisplay.RoundAndTimerDisplay.text = "P2 WINS!";
         }
         else if (transform.position.x >= 35)
         {
             p1control.state = Phase.GAMEOVER;
             p2control.state = Phase.FALL;
+            p2dead = true;
             textDisplay.RoundAndTimerDisplay.text = "P1 WINS";
         }
         else
@@ -170,12 +172,18 @@ public class GameManager : MonoBehaviour
             {
                 p1control.state = Phase.GAMEOVER;
                 p2control.state = Phase.GAMEOVER;
+                p1hdisplay.sprite = HeadSprites[4];
+                p1bdisplay.sprite = ChestSprites[4];
+                p1ldisplay.sprite = TorsoSprites[4];
                 textDisplay.RoundAndTimerDisplay.text = "P2 WINS!";
             }
             else if (p2dead)
             {
                 p1control.state = Phase.GAMEOVER;
                 p2control.state = Phase.GAMEOVER;
+                p2hdisplay.sprite = HeadSprites[4];
+                p2bdisplay.sprite = ChestSprites[4];
+                p2ldisplay.sprite = TorsoSprites[4];
                 textDisplay.RoundAndTimerDisplay.text = "P1 WINS";
             }
             else
