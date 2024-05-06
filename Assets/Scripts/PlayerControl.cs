@@ -577,6 +577,11 @@ public class PlayerControl : MonoBehaviour
     //use a feint
     IEnumerator FeintCount()
     {
+        //Play hit sound
+        SoundPlayer.clip = SFX[1];
+        SoundPlayer.Play();
+
+
         //MeshRenderer meshRenderer = active.GetComponent<MeshRenderer>();
         //Color originalColor = meshRenderer.material.color;
         //meshRenderer.material.color = Color.yellow;
