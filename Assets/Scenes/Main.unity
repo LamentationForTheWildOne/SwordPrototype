@@ -10477,7 +10477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914945212758697665, guid: 773ee75720f77e34db9b1672c3e14528, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PauseDeButton
+      value: PauseTheButton
       objectReference: {fileID: 0}
     - target: {fileID: 5914945212758697665, guid: 773ee75720f77e34db9b1672c3e14528, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
