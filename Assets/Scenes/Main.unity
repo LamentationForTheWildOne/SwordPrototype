@@ -4291,8 +4291,8 @@ MonoBehaviour:
   - {fileID: 322083471, guid: 23015b168c6c545e4a4ade0f74a95fa3, type: 3}
   MusicPlayer: {fileID: 0}
   Songs:
-  - {fileID: 8300000, guid: 1793a641a43d949e38d10b71ea497635, type: 3}
-  - {fileID: 8300000, guid: 86ed64df7f3764b6cbabd04a658f9b57, type: 3}
+  - {fileID: 8300000, guid: 7dae222f76a1e4c67b0cfd1d0582a037, type: 3}
+  - {fileID: 8300000, guid: 7250529749fbd4ee9af93941c454bf92, type: 3}
   MaxRoundTime: 10
   NewRoundTime: 0
   paused: 0
