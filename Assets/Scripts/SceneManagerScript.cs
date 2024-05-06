@@ -7,7 +7,7 @@ public class SceneManagerScript : MonoBehaviour
 {
     public Animator fadeAnimator; 
     public float transitionTime = 1f; 
-     public static SceneManagerScript Instance { get; private set; }
+    public static SceneManagerScript Instance { get; private set; }
 
     void Awake()
     {
@@ -37,16 +37,13 @@ public class SceneManagerScript : MonoBehaviour
 
     IEnumerator TransitionToScene(string sceneName)
     {
-        fadeAnimator.SetTrigger("Fadeout");
+        // fadeAnimator.SetTrigger("Fadeout");
         
-        yield return new WaitForSeconds(transitionTime);
+        yield return new WaitForSeconds(0);
         
        
         SceneManager.LoadScene(sceneName);
-        
-       
-        fadeAnimator.SetTrigger("Fadein");
-        yield return new WaitForSeconds(transitionTime);
+    
         
     }
     
